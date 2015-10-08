@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cs571_HW2_3;
+package cs571_HW2_2;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author speng
  * created on Oct 7, 2015
  */
-public class UT_Sales {
+public class UT_Sale {
 	
 	/**
 	 * Test method for {@link cs571_HW2_1.Sale#getDiscount()}.

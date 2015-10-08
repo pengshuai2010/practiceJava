@@ -8,5 +8,5 @@ package cs571_HW2_3;
  * created on Oct 7, 2015
  */
 public enum Customer {
-SENIOR, PREFFERED, NORMAL
+SENIOR, PREFFERED, DEFAULT
 }
