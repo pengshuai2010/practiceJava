@@ -26,5 +26,16 @@ public class UT_Item {
 		double delta = 1e-5;
 		assertEquals(price*quantity, item.getItemTotal(), delta);
 	}
+	
+	@Test
+	public void testSetOrigUnitPrice() {
+		Item item = new Item();
+		double price = -1.6;
+		try {
+			item.setOrigUnitPrice(price);
+		    fail( "My method didn't throw when I expected it to" );
+		} catch (IllegalArgumentException expectedException) {
+		}
+	}
 
 }

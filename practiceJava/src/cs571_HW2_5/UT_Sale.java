@@ -126,7 +126,7 @@ public class UT_Sale {
 	
 	@Test
 	public void testGetDiscountedSubTotalWithSecialDiscounts() {
-		Item.addToSpecialDiscouts("carrot");
+		Item.addToSpecialDiscounts("carrot");
 		double price = 1.6;
 		double quantity = 2;
 		String title = "carrot";

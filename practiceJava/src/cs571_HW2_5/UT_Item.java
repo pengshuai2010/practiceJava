@@ -6,6 +6,8 @@ package cs571_HW2_5;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import cs571_HW2_5.Item;
+
 /**
  * @author speng
  * created on Oct 7, 2015
@@ -13,9 +15,6 @@ import org.junit.Test;
 public class UT_Item {
 
 
-	/**
-	 * Test method for {@link cs571_HW2_1.Item#getItemTotal()}.
-	 */
 	@Test
 	public void testGetItemTotal() {
 		Item item = new Item();
@@ -29,7 +28,7 @@ public class UT_Item {
 	
 	@Test
 	public void testGetItemTotalWithSpecialDiscounts() {
-		Item.addToSpecialDiscouts("carrot");
+		Item.addToSpecialDiscounts("carrot");
 		double price = 1.6;
 		double quantity = 2;
 		String title = "carrot";
@@ -40,15 +39,24 @@ public class UT_Item {
 	
 	@Test
 	public void testAddToSpecialDiscouts() {
-		Item.addToSpecialDiscouts("green pepper");
-		assertTrue(Item.isApplicableToSpecialDiscouts("green pepper"));
+		Item.addToSpecialDiscounts("green pepper");
+		assertTrue(Item.isApplicableToSpecialDiscounts("green pepper"));
 	}
 	@Test
 	public void testRemoveFromSpecialDiscouts() {
-		Item.addToSpecialDiscouts("cabage");
-		assertTrue(Item.isApplicableToSpecialDiscouts("cabage"));
-		Item.removeFromSpecialDiscouts("cabage");
-		assertFalse(Item.isApplicableToSpecialDiscouts("cabage"));
+		Item.addToSpecialDiscounts("cabage");
+		assertTrue(Item.isApplicableToSpecialDiscounts("cabage"));
+		Item.removeFromSpecialDiscounts("cabage");
+		assertFalse(Item.isApplicableToSpecialDiscounts("cabage"));
 	}
-
+	@Test
+	public void testSetOrigUnitPrice() {
+		Item item = new Item();
+		double price = -1.6;
+		try {
+			item.setOrigUnitPrice(price);
+		    fail( "My method didn't throw when I expected it to" );
+		} catch (IllegalArgumentException expectedException) {
+		}
+	}
 }

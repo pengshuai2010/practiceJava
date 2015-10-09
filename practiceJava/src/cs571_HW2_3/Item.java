@@ -27,6 +27,9 @@ public class Item {
 		return origUnitPrice;
 	}
 	public void setOrigUnitPrice(double origUnitPrice) {
+		if(origUnitPrice <= 0) {
+			throw new IllegalArgumentException("origUnitPrice should be positive");
+		}
 		this.origUnitPrice = origUnitPrice;
 	}
 	public double getQuantity() {

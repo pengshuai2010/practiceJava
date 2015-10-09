@@ -6,6 +6,8 @@ package cs571_HW2_2;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import cs571_HW2_2.Item;
+
 /**
  * @author speng
  * created on Oct 7, 2015
@@ -26,5 +28,14 @@ public class UT_Item {
 		double delta = 1e-5;
 		assertEquals(price*quantity, item.getItemTotal(), delta);
 	}
-
+	@Test
+	public void testSetOrigUnitPrice() {
+		Item item = new Item();
+		double price = -1.6;
+		try {
+			item.setOrigUnitPrice(price);
+		    fail( "My method didn't throw when I expected it to" );
+		} catch (IllegalArgumentException expectedException) {
+		}
+	}
 }

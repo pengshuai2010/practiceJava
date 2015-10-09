@@ -11,15 +11,15 @@ public class Item {
 	public Item() {
 	}
 	
-	static public void addToSpecialDiscouts(String title) {
+	static public void addToSpecialDiscounts(String title) {
 		specialDiscounts.add(title);
 	}
 	
-	static boolean removeFromSpecialDiscouts(String title) {
+	static boolean removeFromSpecialDiscounts(String title) {
 		return specialDiscounts.remove(title);
 	}
 	
-	static boolean isApplicableToSpecialDiscouts(String title) {
+	static boolean isApplicableToSpecialDiscounts(String title) {
 		return specialDiscounts.contains(title);
 	}
 	
@@ -45,6 +45,9 @@ public class Item {
 		return origUnitPrice;
 	}
 	public void setOrigUnitPrice(double origUnitPrice) {
+		if(origUnitPrice <= 0) {
+			throw new IllegalArgumentException("origUnitPrice should be positive");
+		}
 		this.origUnitPrice = origUnitPrice;
 	}
 	public double getQuantity() {
