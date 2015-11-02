@@ -3,6 +3,7 @@
  */
 package practiceJava;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -32,7 +33,7 @@ public class TestFileAccess {
 		FileAccess monitor = new FileAccess(max);
 		List<Thread> list = new ArrayList<Thread>();
 		for(int i = 0; i < numThreads; i++) {
-			Thread thread = new Thread(new FileReader(i + 1, monitor, iterations));
+			Thread thread = new Thread(new MyFileReader(i + 1, monitor, iterations));
 			list.add(thread);
 			thread.start();
 		}

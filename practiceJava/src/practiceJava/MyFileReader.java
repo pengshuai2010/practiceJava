@@ -9,7 +9,7 @@ import java.util.Random;
  * @author speng
  *
  */
-public class FileReader implements Runnable {
+public class MyFileReader implements Runnable {
 	private int id;
 	private FileAccess monitor;
 	private int iterations;
@@ -40,7 +40,7 @@ public class FileReader implements Runnable {
 		}
 	}
 	
-	public FileReader(int id, FileAccess monitor, int iterations) {
+	public MyFileReader(int id, FileAccess monitor, int iterations) {
 		this.id = id;
 		this.monitor = monitor;
 		this.iterations = iterations;
