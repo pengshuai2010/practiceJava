@@ -219,43 +219,17 @@ public class Graph {
 		// {8, 11, inf, inf, inf, inf, 1, 0, 7},
 		// {inf, inf, 2, inf, inf, inf, 6, 7, 0}};
 		
-//		//Exam2 (3)
-//		double[][] weightMatrix = { { 0, inf, 1000, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf },
-//				{ inf, 0, 1400, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf },
-//				{ 1000, 1400, 0, 700, 1250, 1050, inf, inf, inf, inf, inf, inf, inf },
-//				{ inf, inf, 700, 0, 300, inf, inf, inf, inf, inf, inf, inf, inf },
-//				{ inf, inf, 1250, 300, 0, inf, 1150, inf, inf, inf, inf, inf, inf },
-//				{ inf, inf, 1050, inf, inf, 0, inf, 850, inf, 1400, inf, inf, inf },
-//				{ inf, inf, inf, inf, 1150, inf, 0, inf, 950, 1300, inf, inf, inf },
-//				{ inf, inf, inf, inf, inf, 850, inf, 0, inf, 900, inf, inf, inf },
-//				{ inf, inf, inf, inf, inf, inf, 950, inf, 0, inf, 1700, inf, inf },
-//				{ inf, inf, inf, inf, inf, 1400, 1300, 900, inf, 0, 500, inf, inf },
-//				{ inf, inf, inf, inf, inf, inf, inf, inf, 1700, 500, 0, 1650, 1200 },
-//				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1650, 0, 1500 },
-//				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1200, 1500, 0 } };
-//		String names[] = { "Hangzhou", "Guangzhou", "Xian", "Lhasa", "Pataliputra", "Lop Nor", "Taxila", "Kashgar",
-//				"Patalene", "Samarkand", "Rayy", "Antioch", "Constantinople" };
+
 		
-//		//introduction to algorithms, page 658 example
-//		double[][] weightMatrix = {{0,10,inf,5,inf},
-//				{inf,0,1,2,inf},
-//				{inf,inf,0,inf,4},
-//				{inf,3,9,0,2},
-//				{7,inf,6,inf,0}};
-//		String names[] = {"s", "t", "x", "y", "z"};
-		
-		//Exam2 (4)
-		double[][] weightMatrix = { { 0, 1500, 1000, 1200, inf, inf, inf, inf },
-				{ 1500, 0, inf, inf, 1000, inf, inf, inf }, 
-				{ 1000, inf, 0, 800, inf, 1500, inf, inf },
-				{ 1200, inf, 800, 0, 400, inf, inf, 1800 }, 
-				{ inf, 1000, inf, 400, 0, inf, inf, 1500 },
-				{ inf, inf, 1500, inf, inf, 0, 800, inf },
-				{ inf, inf, inf, inf, inf, 800, 0, 400 },
-				{ inf, inf, inf, 1800, 1500, inf, 400, 0 } };
-		String names[] = { "LGA", "MIA", "MSN", "STL", "DFW", "SEA", "SFO", "LAX" };
+		//introduction to algorithms, page 658 example
+		double[][] weightMatrix = {{0,10,inf,5,inf},
+				{inf,0,1,2,inf},
+				{inf,inf,0,inf,4},
+				{inf,3,9,0,2},
+				{7,inf,6,inf,0}};
+		String names[] = {"s", "t", "x", "y", "z"};
 		Graph graph = new Graph(weightMatrix, names);
-		graph.mst();
-//		graph.dijkstra(graph.getVertices().get(0));
+		graph.dijkstra(graph.getVertices().get(0));//"s"
+
 	}
 }
