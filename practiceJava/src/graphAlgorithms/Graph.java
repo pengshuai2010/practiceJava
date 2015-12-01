@@ -74,11 +74,11 @@ public class Graph {
 		return this.getWeights().length;
 	}
 
-	public Graph(double[][] weights) {
+	public Graph(double[][] weights, String[] names) {
 		this.setWeights(weights);
 		List<Vertex> vertexList = new ArrayList<Vertex>();
 		for (int i = 0; i < this.weights.length; i++) {
-			vertexList.add(new Vertex(i, Double.POSITIVE_INFINITY, null));
+			vertexList.add(new Vertex(i, Double.POSITIVE_INFINITY, null, names[i]));
 		}
 		this.setVertices(vertexList);
 		this.deriveAdjListFromWeightMatrix();
@@ -97,7 +97,7 @@ public class Graph {
 	}
 
 	void mst() {
-		Vertex emptyVertex = new Vertex(-1, Double.POSITIVE_INFINITY, null);
+		Vertex emptyVertex = new Vertex(-1, Double.POSITIVE_INFINITY, null, "NIL");
 		for (Vertex vetex : this.getVertices()) {
 			double inf = Double.POSITIVE_INFINITY;
 			vetex.setKey(inf);
@@ -109,7 +109,7 @@ public class Graph {
 		for (Vertex vertex : this.getVertices()) {
 			queue.add(vertex);
 		}
-		this.printMST();
+		this.printDebugInfo();
 		while (!queue.isEmpty()) {
 			Vertex vertex = queue.poll();
 			System.out.println("take out vertex " + vertex.getIndex());
@@ -123,10 +123,10 @@ public class Graph {
 					queue.add(adjacentVertex);
 				}
 				this.printQueue(queue);
-				this.printMST();
+				this.printDebugInfo();
 			}
 		}
-		this.printMST();
+		this.printDebugInfo();
 		System.out.println("MST Total Weight: " + this.getMSTWeight());
 	}
 
@@ -142,12 +142,18 @@ public class Graph {
 		return totalWeight;
 	}
 
-	void printMST() {
-		for (int i = 0; i < this.numVertices(); i++) {
-			System.out.println(i + " -> " + this.getVertices().get(i).getPi().getIndex());
+	void printDebugInfo() {
+//		for (int i = 0; i < this.numVertices(); i++) {
+//			System.out.println(i + ".pi = " + this.getVertices().get(i).getPi().getIndex());
+//		}
+//		for (int i = 0; i < this.numVertices(); i++) {
+//			System.out.println(i + ".key = " + this.getVertices().get(i).getKey());
+//		}
+		for (Vertex vertex: this.getVertices()) {
+			System.out.println(vertex + ".pi\t=\t" + vertex.getPi());
 		}
-		for (int i = 0; i < this.numVertices(); i++) {
-			System.out.println(i + " key: " + this.getVertices().get(i).getKey());
+		for (Vertex vertex: this.getVertices()) {
+			System.out.println(vertex + ".key\t=\t" + vertex.getKey());
 		}
 		System.out.println("================");
 	}
@@ -164,6 +170,40 @@ public class Graph {
 		}
 		System.out.print("]\n");
 	}
+	
+	private void initSingleSource(Vertex source) {
+		Vertex emptyVertex = new Vertex(-1, Double.POSITIVE_INFINITY, null, "NIL");
+		for(Vertex vertex: this.getVertices()) {
+			vertex.setKey(Double.POSITIVE_INFINITY);
+			vertex.setPi(emptyVertex);
+		}
+		source.setKey(0);
+	}
+	
+	private void relax(Vertex u, Vertex v) {
+		double W[][] = this.getWeights();
+		if(v.getKey() > u.getKey() + W[u.getIndex()][v.getIndex()]) {
+			v.setKey(u.getKey() + W[u.getIndex()][v.getIndex()]);
+			v.setPi(u);
+		}
+	}
+	
+	public void dijkstra(Vertex source) {
+		this.initSingleSource(source);
+		PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(Graph.MAX_VERTICES, new VertexSortByKeyComparator());
+		for (Vertex vertex : this.getVertices()) {
+			queue.add(vertex);
+		}
+		while(!queue.isEmpty()) {
+			Vertex u = queue.poll();
+			System.out.println("take out vertex " + u);
+			for(Vertex v: this.getAdjacentVertices(u)) {
+				System.out.println("update adjacent vertex " + v);
+				this.relax(u, v);
+				this.printDebugInfo();
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		double inf = Double.POSITIVE_INFINITY;
@@ -178,21 +218,44 @@ public class Graph {
 		// {inf, inf, inf, inf, inf, 2, 0, 1, 6},
 		// {8, 11, inf, inf, inf, inf, 1, 0, 7},
 		// {inf, inf, 2, inf, inf, inf, 6, 7, 0}};
-
-		double[][] weightMatrix = { { 0, inf, 1000, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf },
-				{ inf, 0, 1400, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf },
-				{ 1000, 1400, 0, 700, 1250, 1050, inf, inf, inf, inf, inf, inf, inf },
-				{ inf, inf, 700, 0, 300, inf, inf, inf, inf, inf, inf, inf, inf },
-				{ inf, inf, 1250, 300, 0, inf, 1150, inf, inf, inf, inf, inf, inf },
-				{ inf, inf, 1050, inf, inf, 0, inf, 850, inf, 1400, inf, inf, inf },
-				{ inf, inf, inf, inf, 1150, inf, 0, inf, 950, 1300, inf, inf, inf },
-				{ inf, inf, inf, inf, inf, 850, inf, 0, inf, 900, inf, inf, inf },
-				{ inf, inf, inf, inf, inf, inf, 950, inf, 0, inf, 1700, inf, inf },
-				{ inf, inf, inf, inf, inf, 1400, 1300, 900, inf, 0, 500, inf, inf },
-				{ inf, inf, inf, inf, inf, inf, inf, inf, 1700, 500, 0, 1650, 1200 },
-				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1650, 0, 1500 },
-				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1200, 1500, 0 } };
-		Graph graph = new Graph(weightMatrix);
+		
+//		//Exam2 (3)
+//		double[][] weightMatrix = { { 0, inf, 1000, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf },
+//				{ inf, 0, 1400, inf, inf, inf, inf, inf, inf, inf, inf, inf, inf },
+//				{ 1000, 1400, 0, 700, 1250, 1050, inf, inf, inf, inf, inf, inf, inf },
+//				{ inf, inf, 700, 0, 300, inf, inf, inf, inf, inf, inf, inf, inf },
+//				{ inf, inf, 1250, 300, 0, inf, 1150, inf, inf, inf, inf, inf, inf },
+//				{ inf, inf, 1050, inf, inf, 0, inf, 850, inf, 1400, inf, inf, inf },
+//				{ inf, inf, inf, inf, 1150, inf, 0, inf, 950, 1300, inf, inf, inf },
+//				{ inf, inf, inf, inf, inf, 850, inf, 0, inf, 900, inf, inf, inf },
+//				{ inf, inf, inf, inf, inf, inf, 950, inf, 0, inf, 1700, inf, inf },
+//				{ inf, inf, inf, inf, inf, 1400, 1300, 900, inf, 0, 500, inf, inf },
+//				{ inf, inf, inf, inf, inf, inf, inf, inf, 1700, 500, 0, 1650, 1200 },
+//				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1650, 0, 1500 },
+//				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1200, 1500, 0 } };
+//		String names[] = { "Hangzhou", "Guangzhou", "Xian", "Lhasa", "Pataliputra", "Lop Nor", "Taxila", "Kashgar",
+//				"Patalene", "Samarkand", "Rayy", "Antioch", "Constantinople" };
+		
+//		//introduction to algorithms, page 658 example
+//		double[][] weightMatrix = {{0,10,inf,5,inf},
+//				{inf,0,1,2,inf},
+//				{inf,inf,0,inf,4},
+//				{inf,3,9,0,2},
+//				{7,inf,6,inf,0}};
+//		String names[] = {"s", "t", "x", "y", "z"};
+		
+		//Exam2 (4)
+		double[][] weightMatrix = { { 0, 1500, 1000, 1200, inf, inf, inf, inf },
+				{ 1500, 0, inf, inf, 1000, inf, inf, inf }, 
+				{ 1000, inf, 0, 800, inf, 1500, inf, inf },
+				{ 1200, inf, 800, 0, 400, inf, inf, 1800 }, 
+				{ inf, 1000, inf, 400, 0, inf, inf, 1500 },
+				{ inf, inf, 1500, inf, inf, 0, 800, inf },
+				{ inf, inf, inf, inf, inf, 800, 0, 400 },
+				{ inf, inf, inf, 1800, 1500, inf, 400, 0 } };
+		String names[] = { "LGA", "MIA", "MSN", "STL", "DFW", "SEA", "SFO", "LAX" };
+		Graph graph = new Graph(weightMatrix, names);
 		graph.mst();
+//		graph.dijkstra(graph.getVertices().get(0));
 	}
 }
