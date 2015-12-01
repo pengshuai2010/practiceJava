@@ -77,24 +77,54 @@ public class Graph {
 		for(Vertex vertex: this.getVertices()) {
 			queue.add(vertex);
 		}
+		this.printMST();
 		while(!queue.isEmpty()) {
 			Vertex vertex = queue.poll();
+			System.out.println("take out vertex " + this.getVertices().indexOf(vertex));
 			for(Vertex adjacentVertex: this.getAdjacentVertices(vertex)) {
-				if(queue.contains(adjacentVertex) && this.getEdgeWeight(vertex, adjacentVertex) < Double.POSITIVE_INFINITY) {
+				System.out.println("update adjacent vertex " + this.getVertices().indexOf(adjacentVertex));
+				if(queue.contains(adjacentVertex) && this.getEdgeWeight(vertex, adjacentVertex) < adjacentVertex.getKey()) {
 					queue.remove(adjacentVertex);
 					adjacentVertex.setPi(vertex);
 					adjacentVertex.setKey(this.getEdgeWeight(vertex, adjacentVertex));
 					queue.add(adjacentVertex);
 				}
+				this.printQueue(queue);
+				this.printMST();
 			}
 		}
 		this.printMST();
+		System.out.println("MST Total Weight: " + this.getMSTWeight());
+	}
+	
+	double getMSTWeight() {
+		int totalWeight = 0;
+		for(int i = 0; i < this.getWeights().length; i++) {
+			Vertex pi = this.getVertices().get(i).getPi();
+			int pi_index = this.getVertices().indexOf(pi);
+			if(pi_index != -1) {
+				totalWeight += this.getWeights()[i][pi_index];
+			}
+		}
+		return totalWeight;
 	}
 	
 	void printMST() {
 		for(int i = 0; i < this.numVertices(); i++) {
 			System.out.println(i + " -> " + this.getVertices().indexOf(this.getVertices().get(i).getPi()));
 		}
+		for(int i = 0; i < this.numVertices(); i++) {
+			System.out.println(i + " key: " + this.getVertices().get(i).getKey());
+		}
+		System.out.println("================");
+	}
+	
+	void printQueue(PriorityQueue<Vertex> queue) {
+		System.out.print("[");
+		for(Vertex vertex: queue) {
+			System.out.print(this.getVertices().indexOf(vertex) + "\t");
+		}
+		System.out.print("]\n");
 	}
 	
 	public static void main(String[] args) {
