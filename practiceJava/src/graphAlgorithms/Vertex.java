@@ -3,7 +3,7 @@ package graphAlgorithms;
 public class Vertex {
 	private double key;
 	private Vertex pi;
-
+	private int index;
 	/**
 	 * @return the index
 	 */
@@ -18,8 +18,6 @@ public class Vertex {
 	private void setIndex(int index) {
 		this.index = index;
 	}
-
-	private int index;
 
 	/**
 	 * @return the key
