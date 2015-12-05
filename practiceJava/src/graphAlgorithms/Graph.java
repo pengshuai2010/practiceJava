@@ -8,8 +8,10 @@ import java.util.PriorityQueue;
 public class Graph {
 	private double[][] weights;
 	private List<List<Vertex>> adjacencyList;
+	private List<Vertex> vertices;
+	private static final int MAX_VERTICES = Integer.MAX_VALUE;
+	
 	private static final boolean DEBUG = false;
-
 	/**
 	 * @return the adjacencyList
 	 */
@@ -24,9 +26,6 @@ public class Graph {
 	private void setAdjacencyList(List<List<Vertex>> adjacencyList) {
 		this.adjacencyList = adjacencyList;
 	}
-
-	private List<Vertex> vertices;
-	private static final int MAX_VERTICES = 1000;
 
 	private void deriveAdjListFromWeightMatrix() {
 		double[][] weights = this.getWeights();
@@ -104,7 +103,9 @@ public class Graph {
 		int index2 = vertex2.getIndex();
 		return this.getWeights()[index1][index2];
 	}
-
+/*
+ * solve minimum spanning tree problem using Prim's algorithm
+ */
 	void mstPrim() {
 		Vertex emptyVertex = new Vertex(-1, Double.POSITIVE_INFINITY, null, "NIL");
 		for (Vertex vetex : this.getVertices()) {
@@ -146,7 +147,9 @@ public class Graph {
 			System.out.println("MST Total Weight: " + this.getMSTWeight());
 		}
 	}
-
+	/*
+	 * get total weight of the minimum spanning tree
+	 */
 	double getMSTWeight() {
 		double totalWeight = 0;
 		for (int i = 0; i < this.getWeights().length; i++) {
@@ -176,12 +179,12 @@ public class Graph {
 	}
 
 	/*
-	 * the just shows what's in the queue, the printed sequence is not
-	 * necessarily the sequence of the queue(probably not)
+	 * this method just shows what's in the queue, the printed sequence is not
+	 * in any particular order
 	 */
 	void printQueue(PriorityQueue<Vertex> queue) {
 		// System.out.print("queue head: " + queue.peek().getIndex() + "\n");
-		System.out.print("queue content(not necessarily the sequence of the queue): [");
+		System.out.print("queue content(not in any particular order): [");
 		for (Vertex vertex : queue) {
 			System.out.print(vertex.getIndex() + "  ");
 		}
@@ -204,7 +207,9 @@ public class Graph {
 			v.setPi(u);
 		}
 	}
-	
+	/*
+	 * solve single-source shortest path problem using Dijkstra's algorithm
+	 */
 	public void dijkstra(Vertex source) {
 		this.initSingleSource(source);
 		PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(Graph.MAX_VERTICES, new VertexSortByKeyComparator());
