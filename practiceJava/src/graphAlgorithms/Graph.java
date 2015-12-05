@@ -9,7 +9,6 @@ public class Graph {
 	private double[][] weights;
 	private List<List<Vertex>> adjacencyList;
 	private List<Vertex> vertices;
-	private static final int MAX_VERTICES = 1000;
 	
 	private static final boolean DEBUG = false;
 	/**
@@ -115,7 +114,7 @@ public class Graph {
 		}
 		Vertex root = this.getVertices().get(0);
 		root.setKey(0);
-		PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(Graph.MAX_VERTICES, new VertexSortByKeyComparator());
+		PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(this.numVertices(), new VertexSortByKeyComparator());
 		for (Vertex vertex : this.getVertices()) {
 			queue.add(vertex);
 		}
@@ -212,7 +211,7 @@ public class Graph {
 	 */
 	public void dijkstra(Vertex source) {
 		this.initSingleSource(source);
-		PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(Graph.MAX_VERTICES, new VertexSortByKeyComparator());
+		PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(this.numVertices(), new VertexSortByKeyComparator());
 		for (Vertex vertex : this.getVertices()) {
 			queue.add(vertex);
 		}
