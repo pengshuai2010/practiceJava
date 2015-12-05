@@ -1,12 +1,14 @@
 package graphAlgorithms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
 public class Graph {
 	private double[][] weights;
 	private List<List<Vertex>> adjacencyList;
+	private static final boolean DEBUG = false;
 
 	/**
 	 * @return the adjacencyList
@@ -74,12 +76,19 @@ public class Graph {
 		return this.getWeights().length;
 	}
 
-	public Graph(double[][] weights, String[] names) {
+	public Graph(double[][] weights, List<String> names) {
 		this.setWeights(weights);
 		List<Vertex> vertexList = new ArrayList<Vertex>();
-		for (int i = 0; i < this.weights.length; i++) {
-			vertexList.add(new Vertex(i, Double.POSITIVE_INFINITY, null, names[i]));
+		if(names == null) {
+			names = new ArrayList<String>();
+			for (int i = 0; i < this.weights.length; i++) {
+				names.add(Integer.toString(i));
+			}
 		}
+		for (int i = 0; i < this.weights.length; i++) {
+			vertexList.add(new Vertex(i, Double.POSITIVE_INFINITY, null, names.get(i)));
+		}
+
 		this.setVertices(vertexList);
 		this.deriveAdjListFromWeightMatrix();
 	}
@@ -96,7 +105,7 @@ public class Graph {
 		return this.getWeights()[index1][index2];
 	}
 
-	void mst() {
+	void mstPrim() {
 		Vertex emptyVertex = new Vertex(-1, Double.POSITIVE_INFINITY, null, "NIL");
 		for (Vertex vetex : this.getVertices()) {
 			double inf = Double.POSITIVE_INFINITY;
@@ -109,12 +118,15 @@ public class Graph {
 		for (Vertex vertex : this.getVertices()) {
 			queue.add(vertex);
 		}
-		this.printDebugInfo();
+		if(Graph.DEBUG)
+			this.printDebugInfo();
 		while (!queue.isEmpty()) {
 			Vertex vertex = queue.poll();
-			System.out.println("take out vertex " + vertex.getIndex());
+			if(Graph.DEBUG)
+				System.out.println("take out vertex " + vertex.getIndex());
 			for (Vertex adjacentVertex : this.getAdjacentVertices(vertex)) {
-				System.out.println("update adjacent vertex " + adjacentVertex.getIndex());
+				if(Graph.DEBUG)
+					System.out.println("update adjacent vertex " + adjacentVertex.getIndex());
 				if (queue.contains(adjacentVertex)
 						&& this.getEdgeWeight(vertex, adjacentVertex) < adjacentVertex.getKey()) {
 					queue.remove(adjacentVertex);
@@ -122,16 +134,21 @@ public class Graph {
 					adjacentVertex.setKey(this.getEdgeWeight(vertex, adjacentVertex));
 					queue.add(adjacentVertex);
 				}
-				this.printQueue(queue);
-				this.printDebugInfo();
+				if(Graph.DEBUG) {
+					this.printQueue(queue);
+					this.printDebugInfo();
+				}
+
 			}
 		}
-		this.printDebugInfo();
-		System.out.println("MST Total Weight: " + this.getMSTWeight());
+		if(Graph.DEBUG) {
+			this.printDebugInfo();
+			System.out.println("MST Total Weight: " + this.getMSTWeight());
+		}
 	}
 
 	double getMSTWeight() {
-		int totalWeight = 0;
+		double totalWeight = 0;
 		for (int i = 0; i < this.getWeights().length; i++) {
 			Vertex pi = this.getVertices().get(i).getPi();
 			int pi_index = pi.getIndex();
@@ -196,11 +213,14 @@ public class Graph {
 		}
 		while(!queue.isEmpty()) {
 			Vertex u = queue.poll();
-			System.out.println("take out vertex " + u);
+			if(Graph.DEBUG)
+				System.out.println("take out vertex " + u);
 			for(Vertex v: this.getAdjacentVertices(u)) {
-				System.out.println("update adjacent vertex " + v);
+				if(Graph.DEBUG)
+					System.out.println("update adjacent vertex " + v);
 				this.relax(u, v);
-				this.printDebugInfo();
+				if(Graph.DEBUG)
+					this.printDebugInfo();
 			}
 		}
 	}
@@ -228,7 +248,7 @@ public class Graph {
 				{inf,3,9,0,2},
 				{7,inf,6,inf,0}};
 		String names[] = {"s", "t", "x", "y", "z"};
-		Graph graph = new Graph(weightMatrix, names);
+		Graph graph = new Graph(weightMatrix, Arrays.asList(names));
 		graph.dijkstra(graph.getVertices().get(0));//"s"
 
 	}

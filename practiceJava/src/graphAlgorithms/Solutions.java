@@ -1,5 +1,7 @@
 package graphAlgorithms;
 
+import java.util.Arrays;
+
 public class Solutions {
 
 	public static void main(String[] args) {
@@ -25,8 +27,8 @@ public class Solutions {
 				{ inf, inf, inf, inf, inf, inf, inf, inf, inf, inf, 1200, 1500, 0 } };
 		String names[] = { "Hangzhou", "Guangzhou", "Xian", "Lhasa", "Pataliputra", "Lop Nor", "Taxila", "Kashgar",
 				"Patalene", "Samarkand", "Rayy", "Antioch", "Constantinople" };
-		Graph graph = new Graph(weightMatrix, names);
-		graph.mst();
+		Graph graph = new Graph(weightMatrix, Arrays.asList(names));
+		graph.mstPrim();
 	}
 	
 	/*
@@ -43,7 +45,7 @@ public class Solutions {
 				{ inf, inf, inf, inf, inf, 800, 0, 400 },
 				{ inf, inf, inf, 1800, 1500, inf, 400, 0 } };
 		String names[] = { "LGA", "MIA", "MSN", "STL", "DFW", "SEA", "SFO", "LAX" };
-		Graph graph = new Graph(weightMatrix, names);
+		Graph graph = new Graph(weightMatrix, Arrays.asList(names));
 		graph.dijkstra(graph.getVertices().get(5));//"SEA"
 	}
 }
