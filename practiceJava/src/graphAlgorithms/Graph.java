@@ -9,7 +9,7 @@ public class Graph {
 	private double[][] weights;
 	private List<List<Vertex>> adjacencyList;
 	private List<Vertex> vertices;
-	private static final int MAX_VERTICES = Integer.MAX_VALUE;
+	private static final int MAX_VERTICES = 1000;
 	
 	private static final boolean DEBUG = false;
 	/**
