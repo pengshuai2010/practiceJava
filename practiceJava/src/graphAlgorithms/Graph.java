@@ -228,6 +228,40 @@ public class Graph {
 			}
 		}
 	}
+	
+	public double[][] floyd_warshall() {
+		int n = this.numVertices();
+		Integer[][] parent = new Integer[n][n];
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < n; j++)
+				if(i == j || this.getWeights()[i][j] == Double.POSITIVE_INFINITY)
+					parent[i][j] = null;
+				else
+					parent[i][j] = i;
+		double[][] D = this.getWeights();
+		for(int k = 0; k < n; k++) {
+			double[][] D_new = new double[n][n];
+			Integer[][] parent_new = new Integer[n][n];
+			for(int i = 0; i < n; i++)
+				for(int j = 0; j < n; j++) {
+					D_new[i][j] = Math.min(D[i][j], D[i][k] + D[k][j]);
+					if(D_new[i][j] < 0) {
+						return null;
+					}
+				}
+					
+			for(int i = 0; i < n; i++)
+				for(int j = 0; j < n; j++)
+					if(D[i][j] <= D[i][k] + D[k][j])
+						parent_new[i][j] = parent[i][j];
+					else
+						parent_new[i][j] = parent[k][j];
+			D = D_new;
+			parent = parent_new;
+		}
+		
+		return D;
+	}
 
 	public static void main(String[] args) {
 		double inf = Double.POSITIVE_INFINITY;
