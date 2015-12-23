@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+/**
+ * @author shuaipeng
+ *
+ */
+package lintCode;
