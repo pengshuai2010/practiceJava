@@ -16,7 +16,7 @@ public class Q158 {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	/**
 	 * @param s:
 	 *            The first string
@@ -25,9 +25,10 @@ public class Q158 {
 	 * @return true or false
 	 */
 	public boolean anagram(String s, String t) {
-		//Write a method anagram(s,t) to decide if two strings are anagrams or not.
-		//need to ask range of character in the string
-		//are they garanteed to be ascii characters?
+		// Write a method anagram(s,t) to decide if two strings are anagrams or
+		// not.
+		// need to ask range of character in the string
+		// are they garanteed to be ascii characters?
 		if (s.length() != t.length()) {
 			return false;
 		}
