@@ -65,6 +65,9 @@ public class HelloWorld {
 		Double[] doubleList = {new Double(1.2), new Double(-1), new Double(2), new Double(-3)};
 		GenericSort.sort(doubleList);
 		GenericSort.printArray(doubleList);
+		int i = Integer.MAX_VALUE-1;
+		System.out.println(i);
+		System.out.println(i*10);
 	}
 	public static void printArray(int[] a){
 		for(int i = 0; i < a.length; i++){
