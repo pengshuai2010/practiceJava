@@ -20,6 +20,7 @@ public class Q13 {
 //		String t = "bcd";
 //		String t = "efg";
 		String t = "efi";
+//		String t = "i";
 //		String t = "";
 		int p = new Q13().strStr(s, t);
 		System.out.println(p);
