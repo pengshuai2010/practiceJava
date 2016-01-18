@@ -26,11 +26,14 @@ public class Q57 {
 	 *         zero.
 	 */
 	public ArrayList<ArrayList<Integer>> threeSum(int[] numbers) {
-		Set<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> triplets = new ArrayList<ArrayList<Integer>>();
 		int target = 0;
 		int[] nums = numbers.clone();
 		Arrays.sort(nums);
 		for (int i = 0; i < nums.length; i++) {
+			// to skip duplicates
+			if (i > 0 && nums[i] == nums[i - 1])
+				continue;
 			int left = i + 1;
 			int right = nums.length - 1;
 			int sum;
@@ -45,14 +48,19 @@ public class Q57 {
 					triplet.add(nums[i]);
 					triplet.add(nums[left]);
 					triplet.add(nums[right]);
-					set.add(triplet);
+					triplets.add(triplet);
 					right--;
 					left++;
+					// to skip duplicates
+					while (left < right && nums[left] == nums[left - 1]) {
+						left++;
+					}
+					while (left < right && nums[right] == nums[right + 1]) {
+						right--;
+					}
 				}
 			}
 		}
-		ArrayList<ArrayList<Integer>> triplets = new ArrayList<ArrayList<Integer>>();
-		triplets.addAll(set);
 		return triplets;
 	}
 
