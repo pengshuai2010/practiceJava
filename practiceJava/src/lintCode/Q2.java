@@ -23,12 +23,10 @@ public class Q2 {
 	public long trailingZeros(long n) {
 		long numFives = 0;
 		long fivePower = 5;
-		long newFives = 0;
-		do {
-			newFives = n / fivePower;
-			numFives += newFives;
+		while (fivePower <= n){
+			numFives += n / fivePower;
 			fivePower *= 5;
-		} while (newFives != 0);
+		} 
 		return numFives;
 	}
 
