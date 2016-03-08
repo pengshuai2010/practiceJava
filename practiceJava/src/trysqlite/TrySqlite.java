@@ -2,6 +2,7 @@ package trysqlite;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -23,10 +24,10 @@ public class TrySqlite {
 		System.out.println("Opened database successfully");
 		Statement stmt = null;
 		stmt = c.createStatement();
-		
+		//drop if exist
 		String sql = "DROP  TABLE IF EXISTS `COMPANY`;";
 		stmt.executeUpdate(sql);
-		
+		//create table
 	    sql = "CREATE TABLE COMPANY " +
                   "(ID INT PRIMARY KEY     NOT NULL," +
                   " NAME           TEXT    NOT NULL, " + 
@@ -38,7 +39,7 @@ public class TrySqlite {
 	    sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
                   "VALUES (1, 'Paul', 32, 'California', 20000.00 );"; 
 	    stmt.executeUpdate(sql);
-
+	    //insert
 	    sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
 	    		"VALUES (2, 'Allen', 25, 'Texas', 15000.00 );"; 
 	    stmt.executeUpdate(sql);
@@ -50,6 +51,27 @@ public class TrySqlite {
 	    sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) " +
 	    		"VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );"; 
 	    stmt.executeUpdate(sql);
+	    //update
+	    sql = "UPDATE COMPANY SET SALARY = 25000.0 WHERE ID = 1";
+	    stmt.executeUpdate(sql);
+	    //delete
+	    sql = "DELETE FROM COMPANY WHERE ID = 2";
+	    stmt.executeUpdate(sql);
+	    //select
+	    ResultSet result = stmt.executeQuery("SELECT * FROM COMPANY;");
+	    while(result.next()) {
+	    	int id = result.getInt("ID");
+	    	String name = result.getString("NAME");
+	    	int age = result.getInt("AGE");
+	    	String addr = result.getString("ADDRESS");
+	    	float salary = result.getFloat("SALARY");
+	    	System.out.println("ID\t=\t" + id);
+	    	System.out.println("NAME\t=\t" + name);
+	    	System.out.println("AGE\t=\t" + age);
+	    	System.out.println("SALARY\t=\t" + salary);
+	    	System.out.println();
+	    }
+	    result.close();
 	    
 	    stmt.close();
 //	    c.commit();// only use if not in auto-commit mode
