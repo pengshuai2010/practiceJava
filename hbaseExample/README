@@ -1,0 +1,19 @@
+## OVERVIEW
+This code example is adapted from https://hbase.apache.org/apidocs/org/apache/hadoop/hbase/client/package-summary.html
+It demestrate how to connect to HBase, create a table, insert a row into a table, get a row from table, delete a table.
+
+## HOW TO BUILD
+to build this project, you must have maven2 installed
+from top level folder of project
+to build project use 'make'. Note that unit tests are run during building, it might take 15-60 seconds.
+to generate api documentation, use 'make doc'
+to clean up use 'make clean'
+
+## HOW TO RUN
+First start HBase. 
+Then copy the conf/hbase-site.xml file from the directory where HBase is installed to src/main/resources.
+Run the the client
+java -cp target/hbaseExample-1.0-SNAPSHOT-jar-with-dependencies.jar hbaseExample.MyLittleHBaseClient 
+
+
+The default maven central repository doesn't contain the depency needed to build this project. So in pom.xml we specified https://repository.apache.org/content/repositories/snapshots as repository.
