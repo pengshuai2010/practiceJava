@@ -9,6 +9,8 @@ public class Q170 {
     public ListNode rotateRight(ListNode head, int k) {
     	if (head == null || head.next == null)
     		return head;
+    	int length = getLength(head);
+    	k = k % length;
     	if (k == 0)
     		return head;
     	ListNode fast = head;
@@ -19,17 +21,27 @@ public class Q170 {
     		fast = fast.next;
     		slow = slow.next;
     	}
-    	while (slow.next != null) {
-    		ListNode tmp = slow.next;
-    		slow.next = slow.next.next;
-    		tmp.next = head;
-    		head = tmp;
-    	}
+    	ListNode newList = slow.next;
+    	slow.next = null;
+    	fast.next = head;
+    	head = newList;
     	return head;
     }
+    
+    int getLength(ListNode head) {
+    	int length = 0;
+    	while(head != null) {
+    		length++;
+    		head = head.next;
+    	}
+    	return length;
+    }
+    
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ListNode list = ListNode.createList(new int[] {1, 2, 3, 4, 5});
+		ListNode.printList(list);
+		list = new Q170().rotateRight(list, 7);
+		ListNode.printList(list);
 	}
 
 }
