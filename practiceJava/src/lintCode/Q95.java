@@ -6,6 +6,7 @@ import java.util.Stack;
 
 /**
  * Created by shuaipeng on 8/15/16.
+ * http://www.cnblogs.com/yuzhangcmu/p/4177047.html
  */
 public class Q95 {
     /**
