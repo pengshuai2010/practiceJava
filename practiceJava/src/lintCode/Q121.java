@@ -7,11 +7,20 @@ import java.util.*;
  */
 public class Q121 {
     public static void main(String[] args) {
-        System.out.println(new Q121().isNeighbor("hit", "hot"));
-        String start = "hit";
-        String end = "cog";
-        Set<String> dict = new HashSet<>(Arrays.asList("hot", "dot", "dog", "lot", "log"));
-        System.out.println(new Q120().ladderLength(start, end, dict));
+//        System.out.println(new Q121().isNeighbor("hit", "hot"));
+//        String start = "hit";
+//        String end = "cog";
+//        Set<String> dict = new HashSet<>(Arrays.asList("hot", "dot", "dog", "lot", "log"));
+
+//        String start = "a";
+//        String end = "c";
+//        Set<String> dict = new HashSet<>(Arrays.asList("a", "b", "c"));
+//        System.out.println(new Q121().findLadders(start, end, dict));
+
+        String start = "hot";
+        String end = "dog";
+        Set<String> dict = new HashSet<>(Arrays.asList("hot", "cog", "dog", "tot", "hog", "hop", "pot", "dot"));
+        System.out.println(new Q121().findLadders(start, end, dict));
     }
 
     /**
@@ -20,7 +29,7 @@ public class Q121 {
      * @param dict,  a set of string
      * @return an integer
      */
-    public int ladderLength(String start, String end, Set<String> dict) {
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
         Set<String> set = new HashSet<>();
         set.addAll(dict);
         set.add(start);
@@ -28,12 +37,11 @@ public class Q121 {
         Map<String, List<String>> neighbors = constructGraph(set);
         // get shortest path using Dijkstra's algorithm
         Map<String, Integer> dist = new HashMap<>();
-        dist.put(start, 0);
         //TODO there is an implicit bug here: we use Integer.MAX_VALUE to indicate infinity. However the distance between two
         // nodes can actually be Integer.MAX_VALUE.
-        dist.put(end, Integer.MAX_VALUE);
-        for (String node : dict)
+        for (String node : set)
             dist.put(node, Integer.MAX_VALUE);
+        dist.put(start, 0);
         PriorityQueue<String> queue = new PriorityQueue<>(set.size(), new NodeComparator(dist));
         queue.add(start);
         Map<String, List<String>> prev = new HashMap<>();
@@ -56,12 +64,25 @@ public class Q121 {
                 }
             }
         }
-        List<String> path = new ArrayList<>();
-        //TODO use dfs to get all paths
-        for (String node = end; !node.equals(start); node = prev.get(node))
-            path.add(node);
-        path.add(start);
-        return path.size();
+        LinkedList<String> path = new LinkedList<>();
+        path.add(end);
+        List<List<String>> paths = new ArrayList<>();
+        dfs(prev, end, path, paths);
+        return paths;
+    }
+
+    private void dfs(Map<String, List<String>> prev, String node, LinkedList<String> path, List<List<String>> paths) {
+        if (prev.get(node) == null) {
+            List<String> tmp = new ArrayList<>();
+            tmp.addAll(path);
+            paths.add(tmp);
+            return;
+        }
+        for (String predecessor : prev.get(node)) {
+            path.addFirst(predecessor);
+            dfs(prev, predecessor, path, paths);
+            path.removeFirst();
+        }
     }
 
     private Map<String, List<String>> constructGraph(Set<String> set) {
