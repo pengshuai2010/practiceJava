@@ -10,6 +10,7 @@ public class Q120 {
         System.out.println(new Q120().isNeighbor("hit", "hot"));
         String start = "hit";
         String end = "cog";
+//        String end = "hit";
         Set<String> dict = new HashSet<>(Arrays.asList("hot", "dot", "dog", "lot", "log"));
         System.out.println(new Q120().ladderLength(start, end, dict));
     }
@@ -21,6 +22,10 @@ public class Q120 {
      * @return an integer
      */
     public int ladderLength(String start, String end, Set<String> dict) {
+        // always remember to check input validity
+        if (start == null || end == null || dict == null)
+            return 0;
+
         Set<String> set = new HashSet<>();
         set.addAll(dict);
         set.add(start);
@@ -54,6 +59,7 @@ public class Q120 {
         for (String node = end; !node.equals(start); node = prev.get(node))
             path.add(node);
         path.add(start);
+        System.out.println(path);
         return path.size();
     }
 
