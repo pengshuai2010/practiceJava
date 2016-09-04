@@ -10,11 +10,7 @@ public class ListNode {
 		this.val = val;
 		this.next = null;
 	}
-	
-	public static void main(String[] args) {
-		
-	}
-	
+
 	static ListNode createList(int[] array) {
 		if (array == null || array.length == 0)
 			return null;
@@ -26,7 +22,7 @@ public class ListNode {
 		}
 		return head.next;
 	}
-	
+
 	static void printList(ListNode head) {
 		StringBuilder sb = new StringBuilder();
 		while(head != null) {
@@ -45,4 +41,9 @@ public class ListNode {
     	}
     	return length;
     }
+
+	ListNode setNext(ListNode node) {
+		this.next = node;
+		return this;
+	}
 }
