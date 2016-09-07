@@ -3,15 +3,15 @@ package lintCode;
 
 // Definition for ListNode.
 public class ListNode {
-	int val;
-	ListNode next;
+	public int val;
+	public ListNode next;
 
-	ListNode(int val) {
+	public ListNode(int val) {
 		this.val = val;
 		this.next = null;
 	}
 
-	static ListNode createList(int[] array) {
+	public static ListNode createList(int[] array) {
 		if (array == null || array.length == 0)
 			return null;
 		ListNode head = new ListNode(0);
@@ -23,7 +23,7 @@ public class ListNode {
 		return head.next;
 	}
 
-	static void printList(ListNode head) {
+	public static void printList(ListNode head) {
 		StringBuilder sb = new StringBuilder();
 		while(head != null) {
 			sb.append(head.val + " -> ");
@@ -32,9 +32,9 @@ public class ListNode {
 		sb.append("null" + System.lineSeparator());
 		System.out.print(sb.toString());
 	}
-	
-    static int getLength(ListNode head) {
-    	int length = 0;
+
+	public static int getLength(ListNode head) {
+		int length = 0;
     	while(head != null) {
     		length++;
     		head = head.next;
@@ -42,7 +42,7 @@ public class ListNode {
     	return length;
     }
 
-	ListNode setNext(ListNode node) {
+	public ListNode setNext(ListNode node) {
 		this.next = node;
 		return this;
 	}
