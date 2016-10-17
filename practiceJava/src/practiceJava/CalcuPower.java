@@ -21,6 +21,7 @@ public class CalcuPower {
 	/**
 	 * Calculate integer power using an O(log(n)) algorithm
 	 * exponent must be positive
+	 *
 	 * @param base
 	 * @param ex
 	 * @return
