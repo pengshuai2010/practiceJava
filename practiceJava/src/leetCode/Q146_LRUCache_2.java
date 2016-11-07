@@ -50,21 +50,21 @@ public class Q146_LRUCache_2 {
 //        System.out.println(map.toString());
 //        System.out.println(map.size());
 
-        Q146_LRUCache_2 map = new Q146_LRUCache_2(1);
-        map.set(0, 2);
-        System.out.println(map.get(0));
-        map.set(1, 1);
-        System.out.println(map.get(1));
-        map.set(2, 0);
-        System.out.println(map.get(2));
-        map.set(3, 2);
-        System.out.println(map.get(3));
-        map.set(1, 2);
-        System.out.println(map.get(1));
-        map.set(1, 3);
-        System.out.println(map.get(1));
-        System.out.println(map.toString());
-        System.out.println(map.size());
+        Q146_LRUCache_2 cache = new Q146_LRUCache_2(1);
+        cache.set(0, 2);
+        System.out.println(cache.get(0));
+        cache.set(1, 1);
+        System.out.println(cache.get(1));
+        cache.set(2, 0);
+        System.out.println(cache.get(2));
+        cache.set(3, 2);
+        System.out.println(cache.get(3));
+        cache.set(1, 2);
+        System.out.println(cache.get(1));
+        cache.set(1, 3);
+        System.out.println(cache.get(1));
+        System.out.println(cache.toString());
+        System.out.println(cache.size());
     }
 
     private int getIndex(int hashcode) {

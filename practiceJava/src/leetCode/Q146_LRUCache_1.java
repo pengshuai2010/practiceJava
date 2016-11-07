@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * make use of existing Java API data structure LinkedHashMap
  * Created by speng on 11/6/16.
  */
 public class Q146_LRUCache_1 extends LinkedHashMap<Integer, Integer> {
