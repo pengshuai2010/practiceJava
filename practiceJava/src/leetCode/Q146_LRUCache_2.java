@@ -1,21 +1,31 @@
 package leetCode;
 
 /**
+ * implements LinkedHashMap from scratch. Capacity is fixed. When a new entry is added and size has reached capacity, the
+ * least recently used entry will be removed.
  * Created by speng on 11/6/16.
  */
 public class Q146_LRUCache_2 {
+    private static int MIN_NUM_BUCKETS = 16;
+    private int size;
     private Entry[] buckets;
     private int capacity;
-    private Entry head = new Entry();
-    private Entry tail = new Entry();
+    private Entry head = new Entry();// dummy head of order linked list
+    private Entry tail = new Entry();// dummy tail of order linked list
 
     public Q146_LRUCache_2(int capacity) {
         if (capacity <= 0)
             throw new RuntimeException("capacity is not posive: " + capacity);
         this.capacity = capacity;
-        buckets = new Entry[capacity];
-        for (int i = 0; i < buckets.length; i++)
+        size = 0;
+        int numBuckets = Math.max(capacity * 2, MIN_NUM_BUCKETS);
+        buckets = new Entry[numBuckets];
+        for (int i = 0; i < buckets.length; i++) {
             buckets[i] = new Entry();
+            Entry dummyTail = new Entry();
+            buckets[i].bucketNext = dummyTail;
+            dummyTail.bucketPrev = buckets[i];
+        }
         head.orderPrev = null;
         head.orderNext = tail;
         tail.orderPrev = head;
@@ -23,14 +33,38 @@ public class Q146_LRUCache_2 {
     }
 
     public static void main(String[] args) {
-        Q146_LRUCache_2 map = new Q146_LRUCache_2(100);
-        map.set(1, 5);
-        map.set(1, 7);
-        map.set(2, 8);
-        map.set(3, 5);
-        System.out.println(map.get(1));
-        System.out.println(map.get(2));
-        System.out.println(map.toString());
+//        Q146_LRUCache_2 map = new Q146_LRUCache_2(4);
+//        map.set(1, 5);
+//        map.set(1, 7);
+//        map.set(2, 8);
+//        map.set(3, 5);
+//        System.out.println(map.get(1));
+//        System.out.println(map.get(2));
+//        map.set(3, 9);
+//        System.out.println(map.toString());
+//        System.out.println(map.size());
+//        map.set(4, 11);
+//        System.out.println(map.toString());
+//        System.out.println(map.size());
+//        map.set(5, 23);
+//        System.out.println(map.toString());
+//        System.out.println(map.size());
+
+        Q146_LRUCache_2 cache = new Q146_LRUCache_2(1);
+        cache.set(0, 2);
+        System.out.println(cache.get(0));
+        cache.set(1, 1);
+        System.out.println(cache.get(1));
+        cache.set(2, 0);
+        System.out.println(cache.get(2));
+        cache.set(3, 2);
+        System.out.println(cache.get(3));
+        cache.set(1, 2);
+        System.out.println(cache.get(1));
+        cache.set(1, 3);
+        System.out.println(cache.get(1));
+        System.out.println(cache.toString());
+        System.out.println(cache.size());
     }
 
     private int getIndex(int hashcode) {
@@ -41,8 +75,12 @@ public class Q146_LRUCache_2 {
         int index = getIndex(key);
         Entry p = buckets[index].bucketNext;
         Entry q = buckets[index];
-        while (p != null) {
+        while (p.bucketNext != null) {// because last node is dummy tail
             if (p.key.equals(key)) {
+                // take this node out from order linked list, then add it before tail
+                // won't affect the bucket linked list
+                removeFromOrderLinkedList(p);
+                addToOrderLinkedList(p);
                 return p.val;
             }
             p = p.bucketNext;
@@ -51,31 +89,70 @@ public class Q146_LRUCache_2 {
         return -1;// as required by the problem description, use -1 to indicate not found
     }
 
-    //TODO change insertion order to recently visited order
+    private void removeFromOrderLinkedList(Entry entry) {
+        entry.orderPrev.orderNext = entry.orderNext;
+        entry.orderNext.orderPrev = entry.orderPrev;
+        entry.orderPrev = null;
+        entry.orderNext = null;
+    }
+
+    private void removeFromBucketLinkedList(Entry entry) {
+        entry.bucketPrev.bucketNext = entry.bucketNext;
+        entry.bucketNext.bucketPrev = entry.bucketPrev;
+        entry.bucketPrev = null;
+        entry.bucketNext = null;
+    }
+
+    private void addToOrderLinkedList(Entry entry) {
+        entry.orderPrev = tail.orderPrev;
+        tail.orderPrev = entry;
+        entry.orderPrev.orderNext = entry;
+        entry.orderNext = tail;
+    }
+
     public void set(int key, int value) {
         int index = getIndex(key);
         Entry p = buckets[index].bucketNext;
         Entry q = buckets[index];
-        while (p != null) {
+        while (p.bucketNext != null) {// because last node is dummy tail
             if (p.key.equals(key)) {
                 p.val = value;
+                removeFromOrderLinkedList(p);
+                addToOrderLinkedList(p);
                 return;
             }
             p = p.bucketNext;
             q = q.bucketNext;
         }
+        while (size >= capacity) {
+            // remove the eldest
+            Entry eldest = head.orderNext;
+            if (eldest != null) {
+                removeFromOrderLinkedList(eldest);
+                removeFromBucketLinkedList(eldest);
+                size--;
+            }
+        }
         Entry entry = new Entry();
         entry.key = key;
         entry.val = value;
-        q.bucketNext = entry;
-        entry.bucketPrev = q;
+        addToBucket(index, entry);
         // update insert order linked list
         // there's a bug with IntelliJ debugger, it tries to dereference all points of doubly linked list, stuck in
         // infinite loop
-        entry.orderPrev = tail.orderPrev;
-        tail.orderPrev = entry;
-        entry.orderPrev.orderNext = entry;
-        entry.orderNext = tail;
+        addToOrderLinkedList(entry);
+        size++;
+    }
+
+    private void addToBucket(int index, Entry entry) {
+        entry.bucketNext = buckets[index].bucketNext;
+        entry.bucketPrev = buckets[index];
+        entry.bucketNext.bucketPrev = entry;
+        buckets[index].bucketNext = entry;
+    }
+
+    public int size() {
+        return size;
     }
 
     @Override
