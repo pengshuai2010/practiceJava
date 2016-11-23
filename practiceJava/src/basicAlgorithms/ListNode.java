@@ -1,4 +1,4 @@
-package lintCode;
+package basicAlgorithms;
 
 
 // Definition for ListNode.

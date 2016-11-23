@@ -1,10 +1,18 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 /**
  * Created by speng on 8/9/16.
  */
 // https://www.cs.mtu.edu/~shene/PUBLICATIONS/1996/3Conline.pdf
 public class Q98 {
+    public static void main(String[] args) {
+        ListNode head = ListNode.createList(new int[]{9, 8, 7, 6, 5});
+        head = new Q98().sortList(head);
+        ListNode.printList(head);
+    }
+
     /**
      * @param head: The head of linked list.
      * @return: You should return the head of the sorted linked list,
@@ -55,11 +63,5 @@ public class Q98 {
             tail.next = p1;
         }
         return dummy.next;
-    }
-
-    public static void main(String[] args) {
-        ListNode head = ListNode.createList(new int[] {9, 8, 7, 6, 5});
-        head = new Q98().sortList(head);
-        ListNode.printList(head);
     }
 }

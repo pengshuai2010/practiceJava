@@ -1,5 +1,7 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +9,13 @@ import java.util.Set;
  * Created by shuaipeng on 8/8/16.
  */
 public class Q102 {
+    public static void main(String[] args) {
+        ListNode cycleList = ListNode.createList(new int[]{1, 2, 3});
+        System.out.println(new Q102().hasCycle(cycleList));
+        cycleList.next.next.next = cycleList;
+        System.out.println(new Q102().hasCycle(cycleList));
+    }
+
     /**
      * @param head: The first node of linked list.
      * @return: True if it has a cycle, or false
@@ -36,12 +45,5 @@ public class Q102 {
             }
             set.add(p);
         }
-    }
-
-    public static void main(String[] args) {
-        ListNode cycleList = ListNode.createList(new int[] {1, 2, 3});
-        System.out.println(new Q102().hasCycle(cycleList));
-        cycleList.next.next.next = cycleList;
-        System.out.println(new Q102().hasCycle(cycleList));
     }
 }

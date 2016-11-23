@@ -1,6 +1,13 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 public class Q165 {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
     /**
      * @param ListNode l1 is the head of the linked list
      * @param ListNode l2 is the head of the linked list
@@ -30,16 +37,12 @@ public class Q165 {
     	}
     	if (p1 != null)
     		t.next = p1;
-    	else 
-    		t.next = p2;
+		else
+			t.next = p2;
     	ListNode tmp = l;
     	l = l.next;
     	tmp.next = null;
     	return l;
     }
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

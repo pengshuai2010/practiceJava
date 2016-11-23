@@ -1,5 +1,7 @@
 package lintCode;
 
+import basicAlgorithms.TreeNode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -9,6 +11,18 @@ import java.util.Stack;
  * http://www.cnblogs.com/yuzhangcmu/p/4177047.html
  */
 public class Q95 {
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(2);
+        root.left = new TreeNode(1);
+        root.left.right = new TreeNode(-1);
+        root.right = new TreeNode(4);
+        root.right.left = new TreeNode(3);
+        root.right.right = new TreeNode(5);
+        TreeNode.inorderTraverse(root);
+        System.out.println();
+        System.out.println(new Q95().isValidBST(root));
+    }
+
     /**
      * @param root: The root of binary tree.
      * @return: True if the binary tree is BST, or false
@@ -37,7 +51,6 @@ public class Q95 {
         inorderTraversal(root.right, list);
     }
 
-
     // use iteration, compare current node with last node
     // space efficiency O(lg(n)) for balanced tree, O(n) in worse case, n is the number of nodes
     public boolean isValidBST(TreeNode root) {
@@ -60,17 +73,5 @@ public class Q95 {
             current = current.right;
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(2);
-        root.left = new TreeNode(1);
-        root.left.right = new TreeNode(-1);
-        root.right = new TreeNode(4);
-        root.right.left = new TreeNode(3);
-        root.right.right = new TreeNode(5);
-        TreeNode.inorderTraverse(root);
-        System.out.println();
-        System.out.println(new Q95().isValidBST(root));
     }
 }

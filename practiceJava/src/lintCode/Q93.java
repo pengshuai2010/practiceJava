@@ -1,6 +1,8 @@
 package lintCode;
 
 
+import basicAlgorithms.TreeNode;
+
 import java.util.HashMap;
 import java.util.Map;
 

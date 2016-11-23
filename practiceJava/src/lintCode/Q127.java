@@ -1,5 +1,7 @@
 package lintCode;
 
+import basicAlgorithms.DirectedGraphNode;
+
 import java.util.*;
 
 /**

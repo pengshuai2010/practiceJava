@@ -1,6 +1,6 @@
 package leetCode;
 
-import lintCode.TreeNode;
+import basicAlgorithms.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;

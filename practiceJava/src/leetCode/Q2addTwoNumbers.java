@@ -1,6 +1,6 @@
 package leetCode;
 
-import lintCode.ListNode;
+import basicAlgorithms.ListNode;
 
 /**
  * Created by speng on 9/5/16.

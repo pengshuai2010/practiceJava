@@ -1,5 +1,7 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 public class Q112 {
 	/**
 	 * @param ListNode

@@ -1,5 +1,7 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 import java.util.ArrayList;
 import java.util.List;
 

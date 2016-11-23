@@ -1,6 +1,8 @@
 package lintCode;
 
 
+import basicAlgorithms.TreeNode;
+
 /**
  * Created by speng on 8/10/16.
  */

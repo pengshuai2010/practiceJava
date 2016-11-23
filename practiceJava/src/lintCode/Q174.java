@@ -1,9 +1,15 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 public class Q174 {
 
 
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 
+	}
+	
 	/**
 	 * @param head:
 	 *            The first node of linked list.
@@ -35,8 +41,7 @@ public class Q174 {
 		tmp.next = null;
 		return head;
 	}
-	
-	
+
 	ListNode removeNthFromEnd(ListNode head, int n) {
 		if (n == 0 || head == null)
 			return head;
@@ -59,11 +64,6 @@ public class Q174 {
 		q.next = q.next.next;
 		tmp.next = null;
 		return head;
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

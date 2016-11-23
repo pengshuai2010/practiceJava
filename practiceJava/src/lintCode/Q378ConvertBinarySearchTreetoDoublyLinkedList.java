@@ -1,5 +1,8 @@
 package lintCode;
 
+import basicAlgorithms.DoublyListNode;
+import basicAlgorithms.TreeNode;
+
 /**
  * Created by speng on 11/22/16.
  */

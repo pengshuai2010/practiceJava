@@ -1,7 +1,16 @@
 package lintCode;
 
+import basicAlgorithms.ListNode;
+
 public class Q170 {
-    /**
+	public static void main(String[] args) {
+		ListNode list = ListNode.createList(new int[]{1, 2, 3, 4, 5});
+		ListNode.printList(list);
+		list = new Q170().rotateRight(list, 7);
+		ListNode.printList(list);
+	}
+
+	/**
      * @param head: the List
      * @param k: rotate to the right k places
      * @return: the list after rotation
@@ -36,12 +45,5 @@ public class Q170 {
     	}
     	return length;
     }
-    
-	public static void main(String[] args) {
-		ListNode list = ListNode.createList(new int[] {1, 2, 3, 4, 5});
-		ListNode.printList(list);
-		list = new Q170().rotateRight(list, 7);
-		ListNode.printList(list);
-	}
 
 }
