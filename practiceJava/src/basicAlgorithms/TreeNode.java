@@ -65,19 +65,14 @@ public class TreeNode {
     }
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(0).setLeft(new TreeNode(-10).setLeft(new TreeNode(-11)).setRight(new TreeNode(-5).setLeft(new TreeNode(-6)))).setRight(new TreeNode(1));
+        TreeNode root = new TreeNode(0);
+        root.left = new TreeNode(-10);
+        root.right = new TreeNode(1);
+        root.left.left = new TreeNode(-11);
+        root.left.right = new TreeNode(-5);
+        root.left.right.left = new TreeNode(-6);
         TreeNode.inorderIterative(root);
         System.out.println();
         TreeNode.preorderiterative(root);
-    }
-
-    TreeNode setLeft(TreeNode node) {
-        this.left = node;
-        return this;
-    }
-
-    TreeNode setRight(TreeNode node) {
-        this.right = node;
-        return this;
     }
 }
