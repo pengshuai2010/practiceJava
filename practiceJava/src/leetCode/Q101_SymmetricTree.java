@@ -8,6 +8,10 @@ import java.util.Stack;
  * Created by speng on 11/22/16.
  */
 public class Q101_SymmetricTree {
+    //some other thoughts: 1. we can construct a mirror of this tree, then compare if they are same. takes O(n) space.
+    //2. or we can get the preorder, inorder, postorder of this tree. If the tree is symmetric, its preorder and postorder
+    // should be symmetric, and its inorder should be self-symmetric.
+
     public boolean isSymmetric1(TreeNode root) {
         return root == null || isSymmetricRecursive(root.left, root.right);
     }
