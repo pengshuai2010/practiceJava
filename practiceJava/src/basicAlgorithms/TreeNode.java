@@ -64,6 +64,26 @@ public class TreeNode {
         }
     }
 
+    /**
+     * get diameter of a binary tree
+     *
+     * @return [diameter, height], it'd better to use a class though
+     */
+    static int[] diameter(TreeNode root) {
+        if (root == null)
+            return new int[]{0, 0};
+        int[] tmp;
+        tmp = diameter(root.left);
+        int lDiameter = tmp[0];
+        int lHeight = tmp[1];
+        tmp = diameter(root.right);
+        int rDiameter = tmp[0];
+        int rHeight = tmp[1];
+        int diameter = Math.max(lHeight + rHeight, Math.max(lDiameter, rDiameter));
+        int height = 1 + Math.max(lHeight, rHeight);
+        return new int[]{diameter, height};
+    }
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(0);
         root.left = new TreeNode(-10);
@@ -74,5 +94,7 @@ public class TreeNode {
         TreeNode.inorderIterative(root);
         System.out.println();
         TreeNode.preorderiterative(root);
+        System.out.println();
+        System.out.println(TreeNode.diameter(root)[0]);
     }
 }
