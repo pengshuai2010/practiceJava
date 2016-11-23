@@ -12,7 +12,7 @@ public class Q236_LowestCommonAncestorofaBinaryTree {
     /**
      * get the path from root to p, and the path from root to q. Compare these two paths.
      */
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
         List<TreeNode> path1 = new ArrayList<TreeNode>();
         getPath(root, p, path1);
         List<TreeNode> path2 = new ArrayList<TreeNode>();
@@ -43,5 +43,15 @@ public class Q236_LowestCommonAncestorofaBinaryTree {
             return true;
         path.remove(path.size() - 1);
         return false;
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q)
+            return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null)
+            return root;
+        return left != null ? left : right;
     }
 }
