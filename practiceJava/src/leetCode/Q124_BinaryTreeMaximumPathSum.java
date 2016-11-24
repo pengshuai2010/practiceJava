@@ -6,7 +6,7 @@ import basicAlgorithms.TreeNode;
  * Created by speng on 11/23/16.
  */
 public class Q124_BinaryTreeMaximumPathSum {
-    int max;
+    int max;// we use a field variable so we don't need pass an int array as argument in the recursive method
 
     public int maxPathSum(TreeNode root) {
         if (root == null)
