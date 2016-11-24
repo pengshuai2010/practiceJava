@@ -6,7 +6,9 @@ package leetCode;
 public class Q198_HouseRobber {
     /**
      * For house i, there are two options: rob or not rob. If we have robbed house (i - 1), we cannot rob
-     * house i.
+     * house i. This is similar to 0-1 knapsack probelm but with some constraints.
+     *
+     *
      * Define DP[i][0] as the gain we get so far at house i if we choose not to rob house i
      * DP[i][1] as the gain we get so far at house i if we choose to rob house i
      * Then
