@@ -6,6 +6,12 @@ import java.util.Arrays;
  * Created by shuaipeng on 11/30/16.
  */
 public class Q73_SetMatrixZeroes {
+    /**
+     * time complexity m*n + m'*n +m*n', where m' and n' are the number of zero rows and columns
+     * space complexity is O(m + n), we can do better by storing isZeroRow and isZeroCol in the matrix. e.g.
+     * use matrix[1][0] ~ matrix[m - 1][0] to store isZeroRow[1] ~ isZeroRow[m - 1], use matrix[0][1] ~ matrix[0][n - 1]
+     * to store isZeroCol[1] ~ isZero[n - 1]. we need two other variable for isZeroRow[0] and isZeroCol[0]
+     */
     public void setZeroes(int[][] matrix) {
         if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
             return;
