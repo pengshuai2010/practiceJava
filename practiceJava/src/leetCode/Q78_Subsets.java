@@ -10,10 +10,10 @@ public class Q78_Subsets {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> solutions = new ArrayList<>();
         if (nums == null || nums.length == 0) {
-            solutions.add(new ArrayList<Integer>());//add the empty set
+            solutions.add(new ArrayList<>());//add the empty set
             return solutions;
         }
-        dfs(nums, 0, new ArrayList<Integer>(), solutions);
+        dfs(nums, 0, new ArrayList<>(), solutions);
         return solutions;
     }
 
