@@ -49,6 +49,5 @@ public class Q73_SetMatrixZeroes {
                 }
             }
         }
-        return;
     }
 }
