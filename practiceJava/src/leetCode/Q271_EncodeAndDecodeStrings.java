@@ -8,6 +8,12 @@ import java.util.List;
  */
 public class Q271_EncodeAndDecodeStrings {
     // Encodes a list of strings to a single string.
+
+    /**
+     * The idea is use "%#%" as delimiter, and use "##" to escape "#". So "%#%" escaped to "%##%".
+     * When decoding, we can simply use split() to get an array of strings, and restore each string by replace "##" back
+     * to "#".
+     */
     public String encode(List<String> strs) {
         if (strs == null) {
             return "";
