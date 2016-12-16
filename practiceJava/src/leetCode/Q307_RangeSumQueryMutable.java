@@ -57,4 +57,57 @@ public class Q307_RangeSumQueryMutable {
         }
     }
 
+    /**
+     * binary indexed tree
+     * read the following link to learn the intuition behind binary indexed tree
+     * http://cs.stackexchange.com/questions/10538/bit-what-is-the-intuition-behind-a-binary-indexed-tree-and-how-was-it-thought-a
+     * <p>
+     * Another way to understand binary indexed tree is to imagine there two trees, one for updating, one for querying.
+     * In the tree for updating, while node index <= n, add delta to node value, then node index moves up by adding LSB
+     * In the tree for querying, whhile node index > 0, add node value to sum, then node index moves up by removing LSB
+     * see the two pictures in http://www.geeksforgeeks.org/binary-indexed-tree-or-fenwick-tree-2/
+     */
+    public class NumArrayBIT {
+        private int[] tree;
+        private int[] nums;
+        private int n;
+
+        public NumArrayBIT(int[] nums) {
+            this.nums = nums;
+            n = nums.length;
+            tree = new int[n + 1];
+            for (int i = 0; i < n; i++) {
+                build(i, nums[i]);
+            }
+        }
+
+        private void build(int i, int delta) {
+            i++;
+            while (i <= n) {
+                tree[i] += delta;
+                i += i & (-i);//add LSB
+            }
+        }
+
+        public void update(int i, int val) {
+            int delta = val - nums[i];
+            nums[i] = val;//don't forget also update original array
+            build(i, delta);
+        }
+
+        private int query(int i) {
+            i++;
+            int sum = 0;
+            while (i > 0) {
+                sum += tree[i];
+                i -= i & (-i);//minus LSB
+            }
+            return sum;
+        }
+
+        public int sumRange(int i, int j) {
+            return query(j) - query(i - 1);
+        }
+    }
+
 }
