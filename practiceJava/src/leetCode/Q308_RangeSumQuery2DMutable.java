@@ -9,6 +9,11 @@ public class Q308_RangeSumQuery2DMutable {
     private int m;
     private int n;
 
+    /**
+     * 2-D Binary Indexed Tree solution. Updating one element takes O(log(m)*log(n)) time, querying takes O(log(m)*log(n)) times.
+     * <p>
+     * Another solution is 2-D segment tree, but 2-D segment tree way more complex to implement than 2-D binary indexed tree.
+     */
     public Q308_RangeSumQuery2DMutable(int[][] matrix) {
         if (matrix.length == 0 || matrix[0].length == 0) {
             return;
