@@ -26,6 +26,10 @@ public class Q370_RangeAddition {
      * where use index as key, +/- inc as value, e.g. (i, inc) and (j + 1, -inc). Then we will find that we don't even need
      * the hashmap, the array itself can serve as the hashmap. For each update, let nums[i] += inc and nums[j + 1] -= inc
      * if (j - 1) < length. At last calculate cumulative sum.
+     *
+     * An extension to this problem is that the original array's elements are not all the same. One solution is to store the
+     * original array separately, which takes O(n) extra space. Another solution is to do a reverse partial sum operation
+     * on the original array, e.g. [2, 3, 10, 5] -> [2, 1, 7, -5]
      */
     public int[] getModifiedArray(int length, int[][] updates) {
         if (length <= 0 || updates == null) {
