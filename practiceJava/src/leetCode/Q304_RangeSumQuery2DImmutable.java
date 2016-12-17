@@ -7,6 +7,8 @@ public class Q304_RangeSumQuery2DImmutable {
     private int[][] sum;
 
     /**
+     * Because the matrix is immutable, we don't need fancy data structures like 2D Bit Indexed Tree to boost update performance.
+     *
      * cache the cumulative sum of region that has (0, 0) as top left and (x, y) as bottom right.
      * The cache can be calculated by dynamic programming. To avoid if statement, define dp[i][j] as the sum of the region
      * that has (0, 0) as top left and (i - 1, j - 1) as bottom right, i and j starts from 1. Then

@@ -69,30 +69,26 @@ public class Q307_RangeSumQueryMutable {
      */
     public class NumArrayBIT {
         private int[] tree;
-        private int[] nums;
+        private int[] array;
         private int n;
 
         public NumArrayBIT(int[] nums) {
-            this.nums = nums;
             n = nums.length;
+            array = new int[n];//we don't have control over the input array nums, so better to make our own copy
             tree = new int[n + 1];
             for (int i = 0; i < n; i++) {
-                build(i, nums[i]);
+                update(i, nums[i]);
             }
         }
 
-        private void build(int i, int delta) {
+        public void update(int i, int val) {
+            int delta = val - array[i];
+            array[i] = val;//don't forget also update original array
             i++;
             while (i <= n) {
                 tree[i] += delta;
                 i += i & (-i);//add LSB
             }
-        }
-
-        public void update(int i, int val) {
-            int delta = val - nums[i];
-            nums[i] = val;//don't forget also update original array
-            build(i, delta);
         }
 
         private int query(int i) {
