@@ -8,13 +8,15 @@ import java.util.List;
  */
 public class Q401_BinaryWatch {
     /**
+     * The key of this problem is that we should quickly realize the data set is small enough for brute force and pre-process.
+     *
      * The idea behind this solution is simple: for all combinations of hours and minutes(12*60 in total),
-     * getOneBits(hour) + getOneBits(minute) == num.
+     * getOneBits(hour) + getOneBits(minute) == num. To speedup, pre-process all numbers [0, 59]
      * <p>
      * Another solution is circular shifting bit mask, e.g. circular shift 0b1100, 0b1010 and bitwise & with 0b1111, but
      * that's an overkill.
      * <p>
-     * If we want fastest solution, we can hard code all answers.
+     * Since data set is so small, if we want fastest solution, we can hard code all answers.
      */
     public List<String> readBinaryWatch(int num) {
         List<String> list = new ArrayList<>();
