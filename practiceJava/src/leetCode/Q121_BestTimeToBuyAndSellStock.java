@@ -5,17 +5,14 @@ package leetCode;
  */
 public class Q121_BestTimeToBuyAndSellStock {
     public int maxProfit1(int[] prices) {
-        if (prices == null || prices.length < 2)
+        if (prices == null || prices.length == 0) {
             return 0;
-        final int n = prices.length;
-        int[] largest = new int[n];
-        largest[n - 1] = prices[n - 1];
-        for (int i = n - 2; i >= 0; i--) {
-            largest[i] = Math.max(prices[i], largest[i + 1]);
         }
+        int minSoFar = prices[0];
         int maxProfit = 0;
-        for (int i = 0; i < n - 1; i++) {
-            maxProfit = Math.max(maxProfit, largest[i + 1] - prices[i]);
+        for (int i = 1; i < prices.length; i++) {
+            maxProfit = Math.max(maxProfit, prices[i] - minSoFar);
+            minSoFar = Math.min(minSoFar, prices[i]);
         }
         return maxProfit;
     }
