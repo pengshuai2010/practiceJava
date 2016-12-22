@@ -1,5 +1,6 @@
 package leetCode;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -57,7 +58,7 @@ public class Q130_SurroundedRegions {
         }
     }
 
-    public void solve(char[][] board) {
+    public void solve2(char[][] board) {
         if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
             return;
         }
@@ -100,6 +101,96 @@ public class Q130_SurroundedRegions {
                     board[i][j] = 'X';
                 }
             }
+        }
+    }
+
+
+    private int[] parent;
+    private int[] size;
+
+    /**
+     * The idea is to link all border 'O' to a dummy node, and link inner 'O' nodes to their neighbor.
+     * Then go over the board again, if an 'O' node is not connected to dummy node, change it to 'X'
+     */
+    public void solve(char[][] board) {
+        if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
+            return;
+        }
+        int m = board.length;
+        int n = board[0].length;
+        size = new int[m * n + 1];
+        Arrays.fill(size, 1);
+        parent = new int[m * n + 1];//add a dummy node at the end
+        for (int i = 0; i < m * n + 1; i++) {
+            parent[i] = i;
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') {
+                    //if a node is on the border and is 'O', link it to the dummy node
+                    if ((i == 0 || i == m - 1 || j == 0 || j == n - 1)) {
+                        union(i * n + j, m * n);
+                    }
+                    if (i > 0 && board[i - 1][j] == 'O') {
+                        union(i * n + j, (i - 1) * n + j);
+                    }
+                    if (j > 0 && board[i][j - 1] == 'O') {
+                        union(i * n + j, i * n + j - 1);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O' && !isConnected(i * n + j, m * n)) {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+
+    private int find(int p) {
+        int root = p;
+        while (parent[root] != root) {
+            root = parent[root];
+        }
+        while (p != root) {
+            int q = parent[p];
+            parent[p] = root;
+            p = q;
+        }
+        return root;
+    }
+
+    private boolean isConnected(int p, int q) {
+        return find(p) == find(q);
+    }
+
+    private void union(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (rootP == rootQ) {//this is import when we use size[]
+            return;
+        }
+        if (size[rootP] < size[rootQ]) {
+            parent[rootP] = rootQ;
+            size[rootQ] += size[rootP];
+        } else {
+            parent[rootQ] = rootP;
+            size[rootP] += size[rootQ];
+        }
+    }
+
+    public static void main(String[] args) {
+//        char[][] board = new char[][] {"XXXX".toCharArray(), "XOOX".toCharArray() ,"XXOX".toCharArray() ,"XOXX".toCharArray()};
+        char[][] board = new char[][] {"XXXX".toCharArray(), "XOOX".toCharArray() ,"XXOX".toCharArray() ,"XOXX".toCharArray()};
+        Q130_SurroundedRegions solution = new Q130_SurroundedRegions();
+        solution.solve(board);
+        for (char[] row: board) {
+            for (char ch: row) {
+                System.out.print(ch + ", ");
+            }
+            System.out.println();
         }
     }
 }
