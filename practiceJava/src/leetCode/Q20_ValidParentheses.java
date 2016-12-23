@@ -16,7 +16,7 @@ public class Q20_ValidParentheses {
         }
     }
 
-    public boolean isValid(String s) {
+    public boolean isValid1(String s) {
         if (s == null) {
             // deal with invalid input
         }
@@ -48,5 +48,31 @@ public class Q20_ValidParentheses {
             }
         }
         return stack.isEmpty();
+    }
+
+    /**
+     * more concise and modular
+     */
+    public boolean isValid(String s) {
+        if (s == null) {
+            // deal with invalid input
+        }
+        if (s.length() % 2 != 0)//since the string only contains parentheses
+            return false;
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty() || !isValid(stack.pop(), c)) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    private boolean isValid(char c1, char c2) {
+        return c1 == '(' && c2 == ')' || c1 == '[' && c2 == ']' || c1 == '{' && c2 == '}';
     }
 }
