@@ -34,6 +34,10 @@ public class CelebrityProblem {
      * and each time choose two persons i and j, see if i knows j. We can always exclude one person each time. After
      * (n - 1) rounds, there's only one person left in the pool. Then we verify if he is a celebrity by check if everybody
      * else knows him and if he doesn't know anybody. We need to do 3*(n - 1) checks in total. So time complexity is O(n)
+     *
+     * There are different ways to implement the pool mentioned above. One way is to use a stack, each time take out two
+     * elements, and only put one back. Another way is to use two pointers, one start from beginning, the other start from
+     * the end.
      */
     int getId(int M[][], int n) {
         java.util.Stack<Integer> stack = new java.util.Stack<>();
