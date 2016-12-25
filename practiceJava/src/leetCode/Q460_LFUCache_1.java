@@ -22,6 +22,10 @@ public class Q460_LFUCache_1 {
      * get the oldest and update tuples. With PriorityQueue, we can get oldest in O(1) time, but updating a tuple would
      * take O(n) time as PriorityQueue.remove(Object o) takes O(n) time. Since updating is needed in both get(int key) and
      * set(int key, int value), these two methods would become O(n).
+     *
+     * A guaranteed O(1) solution: use HashMap to store key-value pair; use doubly linked list to store nodes sorted by usage.
+     * In each node of the doubly linked list is a LinkedHashSet that stores entries with same usage but different timestamp.
+     * see https://discuss.leetcode.com/topic/69137/java-o-1-accept-solution-using-hashmap-doublelinkedlist-and-linkedhashset
      */
     public Q460_LFUCache_1(int capacity) {
         if (capacity == 0) {
