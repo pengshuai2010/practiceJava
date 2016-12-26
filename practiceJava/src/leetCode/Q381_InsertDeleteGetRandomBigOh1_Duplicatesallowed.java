@@ -7,7 +7,9 @@ import java.util.*;
  */
 public class Q381_InsertDeleteGetRandomBigOh1_Duplicatesallowed {
     private List<Integer> list;
-    private Map<Integer, LinkedHashSet<Integer>> map;
+    //LinkedHashSet is used instead of HashSet because iterator for HashSet is expensive
+    //see https://discuss.leetcode.com/topic/53688/java-haspmap-linkedhashset-arraylist-155-ms/38
+    private Map<Integer, Set<Integer>> map;
     private Random rand;
 
     /**
@@ -36,7 +38,7 @@ public class Q381_InsertDeleteGetRandomBigOh1_Duplicatesallowed {
         boolean isFirst = false;
         list.add(val);
         if (!map.containsKey(val)) {
-            map.put(val, new LinkedHashSet<Integer>());
+            map.put(val, new LinkedHashSet<>());
             isFirst = true;
         }
         map.get(val).add(list.size() - 1);
