@@ -45,6 +45,7 @@ public class Q380_InsertDeleteGetRandomBigOhOf1_1 {
         //each compact takes O(n) time, but when removing all element from a list of length n, compact() are only called
         //O(log(n)) times, each it takes O(m) time, m is length of list when compact() is called.
         // 1 + 2^1 + 2^2 + ... + 2^(log(n)) = O(n). So the amortized cost of remove() is O(1)
+        // see https://www.wolframalpha.com/input/?i=integrate+x+%2F+2%5Ex+dx+from+x%3D0+to+infinity
         if (map.size() < list.size() / 2) {
             compact();
         }
