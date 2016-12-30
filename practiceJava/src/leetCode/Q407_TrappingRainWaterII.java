@@ -6,6 +6,12 @@ import java.util.PriorityQueue;
  * Created by shuaipeng on 12/29/16.
  */
 public class Q407_TrappingRainWaterII {
+    /**
+     * In Trapping Rain Water I, we use two pointers to mark the two ends of the boundary, and each time move the pointer
+     * that is smaller. In this 2-D version, the boundary becomes a closed curve. We need to put the all elements on the
+     * closed curve into a collection, and get the one with smallest height. A min heap is a natural choice for this
+     * purpose.
+     */
     public int trapRainWater(int[][] heightMap) {
         if (heightMap == null || heightMap.length == 0 || heightMap[0] == null || heightMap[0].length == 0) {
             return 0;
