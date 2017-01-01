@@ -11,7 +11,7 @@ public class Q131_PalindromePartitioning {
     /**
      * DFS + Memoization
      */
-    public List<List<String>> partition(String s) {
+    public List<List<String>> partition1(String s) {
         List<List<String>> solutions = new ArrayList<>();
         if (s == null || s.length() == 0) {
             return solutions;
@@ -20,9 +20,6 @@ public class Q131_PalindromePartitioning {
         return dfs(s, new HashMap<>());
     }
 
-    /**
-     * We use memoization, so no need for path and solutions.
-     */
     private List<List<String>> dfs(String s, Map<String, List<List<String>>> map) {
         if (map.containsKey(s)) {
             return map.get(s);
@@ -64,5 +61,48 @@ public class Q131_PalindromePartitioning {
         }
         palindrome.put(s, isPalindrome);
         return isPalindrome;
+    }
+
+    /**
+     * simple DFS, takes O(2^n) time in worst case. e.g. "aaaaaaaaaaaaaaa"
+     */
+    public List<List<String>> partition(String s) {
+        List<List<String>> solutions = new ArrayList<>();
+        if (s == null || s.length() == 0) {
+            return solutions;
+        }
+        helper(s, 0, new ArrayList<>(), solutions);
+        return solutions;
+    }
+
+    private void helper(String s, int start, List<String> path, List<List<String>> solutions) {
+        if (start == s.length()) {
+            List<String> tmp = new ArrayList<>();
+            tmp.addAll(path);
+            solutions.add(tmp);
+            return;
+        }
+        for (int i = start + 1; i <= s.length(); i++) {//i is exclusive
+            if (isPalindrome(s, start, i)) {
+                path.add(s.substring(start, i));
+                helper(s, i, path, solutions);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+
+    /**
+     * end is exclusive
+     */
+    private boolean isPalindrome(String s, int start, int end) {
+        if (end - start < 2) {
+            return true;
+        }
+        for (int i = start, j = end - 1; i < j; i++, j--) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
