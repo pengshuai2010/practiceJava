@@ -20,6 +20,9 @@ public class Q131_PalindromePartitioning {
         return dfs(s, new HashMap<>());
     }
 
+    /**
+     * We use memoization, so no need for path and solutions.
+     */
     private List<List<String>> dfs(String s, Map<String, List<List<String>>> map) {
         if (map.containsKey(s)) {
             return map.get(s);
