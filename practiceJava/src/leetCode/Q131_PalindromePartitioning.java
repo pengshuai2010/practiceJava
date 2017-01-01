@@ -6,17 +6,16 @@ import java.util.*;
  * Created by speng on 1/1/17.
  */
 public class Q131_PalindromePartitioning {
-    private Map<String, Boolean> palindrome;
-
     /**
-     * DFS + Memoization
+     * DFS + Memoization.
+     * Strangely, memoization doesn't help with performance. Maybe because in the worst case there are 2^n solutions and we need
+     * to copy all the solutions anyway.
      */
-    public List<List<String>> partition1(String s) {
+    public List<List<String>> partition(String s) {
         List<List<String>> solutions = new ArrayList<>();
         if (s == null || s.length() == 0) {
             return solutions;
         }
-        palindrome = new HashMap<>();
         return dfs(s, new HashMap<>());
     }
 
@@ -28,12 +27,14 @@ public class Q131_PalindromePartitioning {
         if (s.length() == 0) {
             return map.get(s);
         }
-        if (isPalindrome(s)) {
+        if (isPalindrome(s, 0, s.length())) {
             map.get(s).add(Collections.singletonList(s));
         }
         for (int i = 1; i < s.length(); i++) {
             String left = s.substring(0, i);
-            if (isPalindrome(left)) {//optimize here?
+            //memoizing the results of isPalindrome() worsens performance. Is it because dataset is not big enough, or because
+            //calculating the hashcode code of a string takes O(m) time? m is length of the string.
+            if (isPalindrome(left, 0, left.length())) {
                 List<List<String>> right = dfs(s.substring(i, s.length()), map);
                 for (List<String> part : right) {
                     List<String> whole = new ArrayList<>();
@@ -46,27 +47,10 @@ public class Q131_PalindromePartitioning {
         return map.get(s);
     }
 
-    private boolean isPalindrome(String s) {
-        if (s.length() < 2) {
-            return true;
-        }
-        if (palindrome.containsKey(s)) {
-            return palindrome.get(s);
-        }
-        boolean isPalindrome = true;
-        for (int i = 0, j = s.length() - 1; i < j; i++, j--) {
-            if (s.charAt(i) != s.charAt(j)) {
-                isPalindrome = false;
-            }
-        }
-        palindrome.put(s, isPalindrome);
-        return isPalindrome;
-    }
-
     /**
      * simple DFS, takes O(2^n) time in worst case. e.g. "aaaaaaaaaaaaaaa"
      */
-    public List<List<String>> partition(String s) {
+    public List<List<String>> partition1(String s) {
         List<List<String>> solutions = new ArrayList<>();
         if (s == null || s.length() == 0) {
             return solutions;
@@ -77,9 +61,7 @@ public class Q131_PalindromePartitioning {
 
     private void helper(String s, int start, List<String> path, List<List<String>> solutions) {
         if (start == s.length()) {
-            List<String> tmp = new ArrayList<>();
-            tmp.addAll(path);
-            solutions.add(tmp);
+            solutions.add(new ArrayList<>(path));
             return;
         }
         for (int i = start + 1; i <= s.length(); i++) {//i is exclusive
@@ -95,9 +77,6 @@ public class Q131_PalindromePartitioning {
      * end is exclusive
      */
     private boolean isPalindrome(String s, int start, int end) {
-        if (end - start < 2) {
-            return true;
-        }
         for (int i = start, j = end - 1; i < j; i++, j--) {
             if (s.charAt(i) != s.charAt(j)) {
                 return false;
