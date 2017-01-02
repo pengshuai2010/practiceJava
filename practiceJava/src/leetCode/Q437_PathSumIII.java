@@ -55,7 +55,8 @@ public class Q437_PathSumIII {
      * to this node) minus target is in the map, that means there's subpath whose sum is target.
      * See https://discuss.leetcode.com/topic/64526/17-ms-o-n-java-prefix-sum-method
      * <p>
-     * takes only O(n) time.
+     * takes only O(n) time. This can be abstracted to a more general problem: given an array of integers, and a target,
+     * how many subarrays' sum equals to the target?
      */
     public int pathSum(TreeNode root, int sum) {
         if (root == null) {
