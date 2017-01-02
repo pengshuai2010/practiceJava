@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Q113_PathSumII {
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        //ask interviewer if need to consider overflow!
         List<List<Integer>> solutions = new ArrayList<>();
         if (root == null) {
             return solutions;
@@ -18,7 +19,7 @@ public class Q113_PathSumII {
         return solutions;
     }
 
-    private void dfs(TreeNode root, int target, List<Integer> path, List<List<Integer>> solutions) {
+    private void dfs(TreeNode root, long target, List<Integer> path, List<List<Integer>> solutions) {
         path.add(root.val);
         if (root.left == null && root.right == null) {
             if (target == root.val) {
