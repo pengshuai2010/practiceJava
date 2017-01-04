@@ -14,7 +14,7 @@ public class Q247_StrobogrammaticNumberII {
     /**
      * A number cannot start with zero. Need to pay attention to that.
      */
-    public List<String> findStrobogrammatic(int n) {
+    public List<String> findStrobogrammatic1(int n) {
         List<String> solutions = new ArrayList<>();
         if (n < 1) {
             return solutions;
@@ -57,5 +57,37 @@ public class Q247_StrobogrammaticNumberII {
             sb.append(map.get(origin.charAt(i)));
         }
         return sb.toString();
+    }
+
+    /**
+     * A shorter and more elegant solution. The drawback is creating to many temporary String objects.
+     */
+    public List<String> findStrobogrammatic(int n) {
+        List<String> solutions = new ArrayList<>();
+        if (n < 1) {
+            return solutions;
+        }
+        List<String> prev = new ArrayList<>();
+        if (n % 2 == 0) {
+            prev.add("");
+        } else {
+            prev.add("0");
+            prev.add("1");
+            prev.add("8");
+        }
+        for (int i = 0; i < n / 2; i++) {
+            List<String> curr = new ArrayList<>();
+            for (String str : prev) {
+                if (i < n / 2 - 1) {
+                    curr.add("0" + str + "0");
+                }
+                curr.add("1" + str + "1");
+                curr.add("6" + str + "9");
+                curr.add("8" + str + "8");
+                curr.add("9" + str + "6");
+            }
+            prev = curr;
+        }
+        return prev;
     }
 }
