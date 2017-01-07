@@ -10,7 +10,9 @@ public class Q294_FlipGameII {
     Map<String, Boolean> map = new HashMap<>();
 
     /**
-     * min-max algorithm
+     * min-max algorithm. Time complexity analysis: define T(n) as time complexity when input size is n. suppose input
+     * are all "+", T(n) = (n - 2) * T(n - 2) = (n - 2) * (n - 4) * T(n - 4) = ... = O(n!). We can improve the time
+     * complexity by memoization. With memoization, a loose bound is O(2^n) as each element can be either '+' or '-'.
      */
     public boolean canWin1(String s) {
         if (s == null) {
@@ -28,13 +30,12 @@ public class Q294_FlipGameII {
             if (s[i] == '+' && s[i + 1] == '+') {
                 s[i] = '-';
                 s[i + 1] = '-';
-                if (!canIwin(s)) {
-                    s[i] = '+';
-                    s[i + 1] = '+';//don't forget to restore s before EVERY return statement!
-                    return true;
-                }
+                boolean wins = !canIwin(s);
                 s[i] = '+';
                 s[i + 1] = '+';
+                if (wins) {
+                    return true;
+                }
             }
         }
         return false;
