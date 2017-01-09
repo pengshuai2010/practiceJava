@@ -35,7 +35,7 @@ public class Q56_MergeIntervals {
         return res;
     }
 
-    public class Interval {
+    private class Interval {
         int start;
         int end;
 
