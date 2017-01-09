@@ -10,7 +10,8 @@ import java.util.List;
 public class Q56_MergeIntervals {
     /**
      * First sort the Intervals by their start point. Create a results list, in which all Intervals are
-     * non-overlapping
+     * non-overlapping. Add first Interval into results list. Then for each interval in the input list, if it's overlapping
+     * with the last interval in results list, merge these two; else add the interval into results list.
      */
     public List<Interval> merge(List<Interval> intervals) {
         if (intervals == null) {
