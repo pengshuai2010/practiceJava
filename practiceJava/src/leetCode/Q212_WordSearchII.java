@@ -9,16 +9,6 @@ import java.util.Set;
  * Created by speng on 1/9/17.
  */
 public class Q212_WordSearchII {
-    private class TrieNode {
-        boolean isEnd = false;
-        /**
-         * In this problem, the character set is limited to lower case English letters, so we don't need to store
-         * character at TrieNode class, just use "TrieNode[] children = new TrieNode[26]" is enough.
-         * If the character set is unicode, we would need to use a HashMap<Character, TrieNode>
-         */
-        TrieNode[] children = new TrieNode[26];
-    }
-
     private int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     /**
@@ -60,16 +50,6 @@ public class Q212_WordSearchII {
         p.isEnd = true;
     }
 
-    private class TrieNode {
-        boolean isEnd = false;
-        /**
-         * In this problem, the character set is limited to lower case English letters, so we don't need to store
-         * character at TrieNode class, just use "TrieNode[] children = new TrieNode[26]" is enough.
-         * If the character set is unicode, we would need to use a HashMap<Character, TrieNode>
-         */
-        TrieNode[] children = new TrieNode[26];
-    }
-
     private void dfs(TrieNode p, int x, int y, char[][] board, Set<String> foundWords, StringBuilder path) {
         //change character on board to '#' to save the space for boolean[][] visited. But remember to change it back and
         //verify if board[x][y] != '#' before p.children[board[x][y] - 'a'] to avoid indexOutOfBoundException
@@ -88,5 +68,15 @@ public class Q212_WordSearchII {
             board[x][y] = ch;
             path.deleteCharAt(path.length() - 1);
         }
+    }
+
+    private class TrieNode {
+        boolean isEnd = false;
+        /**
+         * In this problem, the character set is limited to lower case English letters, so we don't need to store
+         * character at TrieNode class, just use "TrieNode[] children = new TrieNode[26]" is enough.
+         * If the character set is unicode, we would need to use a HashMap<Character, TrieNode>
+         */
+        TrieNode[] children = new TrieNode[26];
     }
 }
