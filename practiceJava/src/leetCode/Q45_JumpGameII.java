@@ -41,7 +41,9 @@ public class Q45_JumpGameII {
     }
 
     //BFS is most natural solution for shortest path problems.
-    // O(n) space, O(n) time with trimming. still exceeds time limit
+    // O(n) space, O(n^2) time with trimming. still exceeds time limit
+    //time complexity O(|V| + |E|), |V| is n, |E| = O(n^2), e.g.
+    //[3, 2, 1, 1, 0]
     public int jump2(int[] nums) {
         if (nums == null || nums.length == 0) {
             return -1;
@@ -69,7 +71,7 @@ public class Q45_JumpGameII {
         return -1;
     }
 
-    // BSF, O(n) time, but only O(1) space. The trick is that the array itself can serve as a queue. All we need to do is to decide the bound of
+    // O(n) time, O(1) space. The trick is that the array itself can serve as a queue. All we need to do is to decide the bound of
     // each level. [0], [1, 2], [3, 4]
     public int jump(int[] nums) {
         if (nums == null || nums.length == 0) {
