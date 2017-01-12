@@ -16,17 +16,15 @@ public class Q77_Combinations {
         return solutions;
     }
 
-    private void dfs(List<Integer> partial, int k, int start, int n, List<List<Integer>> solutions) {
+    private void dfs(List<Integer> path, int k, int start, int n, List<List<Integer>> solutions) {
         if (k == 0) {
-            List<Integer> tmp = new ArrayList<>();
-            tmp.addAll(partial);
-            solutions.add(tmp);
+            solutions.add(new ArrayList<>(path));
             return;
         }
         for (int i = start; i + k - 1 <= n; i++) {
-            partial.add(i);
-            dfs(partial, k - 1, i + 1, n, solutions);
-            partial.remove(partial.size() - 1);
+            path.add(i);
+            dfs(path, k - 1, i + 1, n, solutions);
+            path.remove(path.size() - 1);
         }
     }
 }
