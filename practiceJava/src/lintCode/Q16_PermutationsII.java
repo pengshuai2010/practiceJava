@@ -21,14 +21,14 @@ public class Q16_PermutationsII {
         for (int elem : nums) {
             list.add(elem);
         }
-        dfs1(list, new ArrayList<>(), solutions);
+        dfsUsingList(list, new ArrayList<>(), solutions);
         return solutions;
     }
 
     /**
      * building an answer takes O(n^2) time, there are O(n!) answers in total, so time complexity is O(n^2 * n!)
      */
-    private void dfs1(List<Integer> nums, List<Integer> path, List<List<Integer>> solutions) {
+    private void dfsUsingList(List<Integer> nums, List<Integer> path, List<List<Integer>> solutions) {
         if (nums.size() == 0) {
             solutions.add(new ArrayList<>(path));
             return;
@@ -39,9 +39,38 @@ public class Q16_PermutationsII {
             if (i == 0 || !nums.get(i).equals(nums.get(i - 1))) {
                 int value = nums.remove(i);
                 path.add(value);
-                dfs1(nums, path, solutions);
+                dfsUsingList(nums, path, solutions);
                 path.remove(path.size() - 1);
                 nums.add(i, value);
+            }
+        }
+    }
+
+    public List<List<Integer>> permuteUnique2(int[] nums) {
+        List<List<Integer>> solutions = new ArrayList<>();
+        if (nums == null) {
+            return solutions;
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int elem : nums) {
+            map.put(elem, map.getOrDefault(elem, 0) + 1);
+        }
+        dfsUsingMap(map, nums.length, new ArrayList<>(), solutions);
+        return solutions;
+    }
+
+    private void dfsUsingMap(Map<Integer, Integer> map, int n, List<Integer> path, List<List<Integer>> solutions) {
+        if (path.size() == n) {
+            solutions.add(new ArrayList<>(path));
+            return;
+        }
+        for (int key : map.keySet()) {
+            if (map.get(key) > 0) {
+                map.put(key, map.get(key) - 1);
+                path.add(key);
+                dfsUsingMap(map, n, path, solutions);
+                path.remove(path.size() - 1);
+                map.put(key, map.get(key) + 1);
             }
         }
     }
@@ -56,11 +85,11 @@ public class Q16_PermutationsII {
         for (int elem : nums) {
             list.add(elem);
         }
-        dfs(list, new ArrayList<>(), solutions);
+        dfsUsingDeque(list, new ArrayList<>(), solutions);
         return solutions;
     }
 
-    private void dfs(Deque<Integer> nums, List<Integer> path, List<List<Integer>> solutions) {
+    private void dfsUsingDeque(Deque<Integer> nums, List<Integer> path, List<List<Integer>> solutions) {
         if (nums.size() == 0) {
             solutions.add(new ArrayList<>(path));
             return;
@@ -72,7 +101,7 @@ public class Q16_PermutationsII {
             int value = nums.removeFirst();
             if (i == 0 || value != prev) {
                 path.add(value);
-                dfs(nums, path, solutions);
+                dfsUsingDeque(nums, path, solutions);
                 path.remove(path.size() - 1);
                 prev = value;
             }
