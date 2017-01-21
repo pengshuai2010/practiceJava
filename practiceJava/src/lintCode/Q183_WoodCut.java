@@ -10,7 +10,8 @@ public class Q183_WoodCut {
 	public int woodCut(int[] L, int k) {
 		if (L == null || L.length == 0)
 			return 0;
-		long sum = 0;
+        //let high = sum / n. Or we can let high = max(L[i])
+        long sum = 0;
 		for (int item : L)
 			sum += item;
         int high = (int) (sum / k);
