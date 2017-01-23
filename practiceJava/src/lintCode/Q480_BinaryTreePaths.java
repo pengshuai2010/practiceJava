@@ -13,7 +13,7 @@ public class Q480_BinaryTreePaths {
      * @param root the root of the binary tree
      * @return all root-to-leaf paths
      */
-    public List<String> binaryTreePaths(TreeNode root) {
+    public List<String> binaryTreePaths1(TreeNode root) {
         List<String> solutions = new ArrayList<>();
         if (root == null) {
             return solutions;
@@ -42,5 +42,32 @@ public class Q480_BinaryTreePaths {
         if (root.right != null) {
             preorder(root.right, path, solutions);
         }
+    }
+
+    /**
+     * Divide and Conquer solution.
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> solutions = new ArrayList<>();
+        if (root == null) {
+            return solutions;
+        }
+        if (root.left == null && root.right == null) {
+            solutions.add(Integer.toString(root.val));
+            return solutions;
+        }
+        if (root.left != null) {
+            List<String> paths = binaryTreePaths(root.left);
+            for (String path : paths) {
+                solutions.add(root.val + "->" + path);
+            }
+        }
+        if (root.right != null) {
+            List<String> paths = binaryTreePaths(root.right);
+            for (String path : paths) {
+                solutions.add(root.val + "->" + path);
+            }
+        }
+        return solutions;
     }
 }
