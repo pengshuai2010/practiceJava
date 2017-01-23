@@ -61,7 +61,7 @@ public class Q453_FlattenBinaryTreeToLinkedList {
         last = root;
         //preserve root.right because root.right will be changed by flatten(root.left)
         TreeNode right = root.right;
-        flatten(root.left);
-        flatten(right);
+        preorder(root.left);
+        preorder(right);
     }
 }
