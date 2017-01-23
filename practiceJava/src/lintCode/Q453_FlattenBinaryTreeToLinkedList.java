@@ -10,7 +10,7 @@ public class Q453_FlattenBinaryTreeToLinkedList {
      * @param root: a TreeNode, the root of the binary tree
      * @return: nothing
      */
-    public void flatten(TreeNode root) {
+    public void flatten1(TreeNode root) {
         if (root == null) {
             return;
         }
@@ -37,5 +37,31 @@ public class Q453_FlattenBinaryTreeToLinkedList {
         }
         //when root.right == null, we should return leftLastNode
         return rightLastNode == null ? leftLastNode : rightLastNode;
+    }
+
+    TreeNode last = null;
+
+    public void flatten(TreeNode root) {
+        last = null;//reset last because this method might be called multiple times
+        preorder(root);
+    }
+
+    /**
+     * pre-order traversal. We use instance variable last to keep record of the last node in the "linked list" as we are
+     * traversing the tree.
+     */
+    private void preorder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (last != null) {
+            last.right = root;
+            last.left = null;
+        }
+        last = root;
+        //preserve root.right because root.right will be changed by flatten(root.left)
+        TreeNode right = root.right;
+        flatten(root.left);
+        flatten(right);
     }
 }
