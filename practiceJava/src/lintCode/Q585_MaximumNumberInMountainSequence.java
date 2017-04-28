@@ -14,7 +14,7 @@ public class Q585_MaximumNumberInMountainSequence {
         }
         int start = 0;
         int end = nums.length - 1;
-        while (start + 1 < end) {
+        while (start + 1 < end) {// the special case of nums.length == 1 or 2 will be handled by the condition of while loop
             int mid = start + (end - start) / 2;
             if (nums[mid - 1] > nums[mid]) {
                 end = mid;
