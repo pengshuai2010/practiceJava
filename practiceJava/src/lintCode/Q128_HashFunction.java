@@ -15,8 +15,10 @@ public class Q128_HashFunction {
         }
         int base = 33;
         long ans = 0;//always use long to avoid overflow when number increase exponentially
-        for (int i = 0; i < key.length; i++) {
-            ans = (ans * base + key[i]) % HASH_SIZE;
+        // (a + b) mod n = (a mod n + b mod n) mod n
+        // (a * b) mod n = ((a mod n) * (b mod n)) mod n
+        for (char ch : key) {
+            ans = (ans * base + ch) % HASH_SIZE;
         }
         return (int) ans;
     }
