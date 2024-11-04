@@ -10,7 +10,7 @@ import java.util.Stack;
  * Created by shuaipeng on 8/15/16.
  * http://www.cnblogs.com/yuzhangcmu/p/4177047.html
  */
-public class Q95 {
+public class Q95_ValidateBinarySearchTree_Traverse {
     public static void main(String[] args) {
         TreeNode root = new TreeNode(2);
         root.left = new TreeNode(1);
@@ -20,7 +20,7 @@ public class Q95 {
         root.right.right = new TreeNode(5);
         TreeNode.inorderTraverse(root);
         System.out.println();
-        System.out.println(new Q95().isValidBST(root));
+        System.out.println(new Q95_ValidateBinarySearchTree_Traverse().isValidBST(root));
     }
 
     /**
