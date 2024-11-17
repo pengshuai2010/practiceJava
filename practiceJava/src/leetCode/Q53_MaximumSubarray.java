@@ -4,10 +4,42 @@ package leetCode;
  * Created by speng on 11/13/16.
  */
 public class Q53_MaximumSubarray {
+    public int maxSubArray(int[] nums) {
+        // is nums guranteed to be not null, not empty?
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int[] prefixSum = calculatePrefixSum(nums);
+        int start = 0;
+        int end = 0;
+        int max = Integer.MIN_VALUE;
+        while (end < nums.length) {
+            if (prefixSum[end] - prefixSum[start] + nums[start] < nums[end]) {
+                start = end;
+            }
+            int rangeSum = prefixSum[end] - prefixSum[start] + nums[start];
+            if (rangeSum > max) {
+                max = rangeSum;
+            }
+            end++;
+        }
+        return max;
+    }
+
+    private int[] calculatePrefixSum(int[] nums) {
+        int[] prefixSum = new int[nums.length];
+        int runningSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            runningSum += nums[i];
+            prefixSum[i] = runningSum;
+        }
+        return prefixSum;
+    }
+
     /**
      * a clear explanation https://discuss.leetcode.com/topic/5000/accepted-o-n-solution-in-java
      */
-    public int maxSubArray(int[] nums) {
+    public int maxSubArray2(int[] nums) {
         if (nums == null || nums.length == 0) {
             throw new RuntimeException("invalide input" + nums);
         }

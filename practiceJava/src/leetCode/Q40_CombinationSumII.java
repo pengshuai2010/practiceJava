@@ -10,33 +10,40 @@ import java.util.List;
  * Created by speng on 11/12/16.
  */
 public class Q40_CombinationSumII {
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> solutions = new ArrayList<>();
-        if (candidates == null || candidates.length == 0)
-            return solutions;
-        Arrays.sort(candidates);
-        dfs(0, 0, target, candidates, new ArrayList<>(), solutions);
-        return solutions;
-    }
-
-    private void dfs(int index, int sum, int target, int[] candidates, List<Integer> partial, List<List<Integer>> solutions) {
-        if (sum > target)
+    private static void dfs(int[] candidates, int startIndex, int target, List<Integer> partial, List<List<Integer>> solutions) {
+        if (target == 0) {
+            List<Integer> copy = new ArrayList<>(partial);
+            solutions.add(copy);
             return;
-        if (sum == target) {
-            List<Integer> tmp = new ArrayList<>();
-            tmp.addAll(partial);
-            solutions.add(tmp);
+        } else if (target < 0) { // pruning since all candidates are positive
             return;
         }
-        for (int i = index; i < candidates.length; i++) {// Different from Q39, i starts from index
-            if (i > index && candidates[i] == candidates[i - 1])
+        for (int i = startIndex; i < candidates.length; i++) {
+            // (i > startIndex && candidates[i - 1] == candidates[i] ) so that in case of something like [1, 1, 1] we can still
+            // use an element that is the same as the element
+            // used last level, but won't add duplicates in this level.
+            if (i > startIndex && candidates[i - 1] == candidates[i]) {
                 continue;
-            int num = candidates[i];
-            if (sum + num > target)
+            }
+            if (target - candidates[i] < 0) { // pruning since the candidates are sorted
                 break;
-            partial.add(num);
-            dfs(i + 1, sum + num, target, candidates, partial, solutions);// index is increased because same number cannot appear twice in the combination
+            }
+            partial.add(candidates[i]);
+            // startIndex is (i + 1) so that each element is used only once
+            dfs(candidates, i + 1, target - candidates[i], partial, solutions);
             partial.remove(partial.size() - 1);
         }
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        // clarifying questions: are there duplicates in candidates?
+        // will candidate all be positive?
+        List<List<Integer>> solutions = new ArrayList<>();
+        if (candidates == null || candidates.length == 0) {
+            return solutions;
+        }
+        Arrays.sort(candidates); // sorting allows use to deduplicate and allow pruning
+        dfs(candidates, 0, target, new ArrayList<>(), solutions);
+        return solutions;
     }
 }

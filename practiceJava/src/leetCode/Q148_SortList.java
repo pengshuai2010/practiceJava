@@ -2,6 +2,9 @@ package leetCode;
 
 import basicAlgorithms.ListNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by speng on 12/22/16.
  */
@@ -65,5 +68,26 @@ public class Q148_SortList {
             tail.next = dummy2.next;
         }
         return dummy3.next;
+    }
+
+    public ListNode sortList2(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        List<ListNode> list = new ArrayList<>();
+        ListNode p = head;
+        while (p != null) {
+            list.add(p);
+            p = p.next;
+        }
+        list.sort((a, b) -> a.val - b.val);
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        for (ListNode listNode : list) {
+            tail.next = listNode;
+            tail = tail.next;
+        }
+        tail.next = null;
+        return dummy.next;
     }
 }

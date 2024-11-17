@@ -3,6 +3,40 @@ package lintCode;
 import java.util.Arrays;
 
 public class Q31 {
+	/**
+	 * @param nums: The integer array you should partition
+	 * @param k:    An integer
+	 * @return: The index after partition
+	 */
+	public int partitionArray2(int[] nums, int k) {
+		if (nums.length == 0) { // necessary since we get nums[0] later on
+			return 0;
+		}
+		int tmp = nums[0]; // preserve nums[0] so that we can reuse the partition algorithm for quick sort
+		int left = 0;
+		int right = nums.length - 1;
+		while (left < right) {
+			while (left < right && nums[right] >= k) {
+				right--;
+			}
+			if (left < right) {
+				nums[left] = nums[right];
+				left++;
+			}
+			while (left < right && nums[left] < k) {
+				left++;
+			}
+			if (left < right) {
+				nums[right] = nums[left];
+				right--;
+			}
+		}
+		nums[left] = tmp;
+		if (tmp >= k) {
+			return left;
+		}
+		return left + 1;
+	}
 	/*
 	 * Partition Array Show result
 	 * 
