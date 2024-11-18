@@ -1,6 +1,9 @@
 package leetCode;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by speng on 1/4/17.
@@ -10,7 +13,7 @@ public class Q170_TwoSumIII_DataStructureDesign {
      * Use a LinkedHashMap. Add() takes O(1) time, and find() takes O(n) time.
      */
     public class TwoSum {
-        private Map<Integer, Integer> map = new LinkedHashMap<>();//use LinkedHashMap can make iterating through a hash map WAY faster! Even if there arn't deletes
+        private final Map<Integer, Integer> map = new HashMap<>();
 
         // Add the number to an internal data structure.
         public void add(int number) {
@@ -33,11 +36,11 @@ public class Q170_TwoSumIII_DataStructureDesign {
 
     /**
      * Use two Sets. Add() takes O(m) time, where m is number of unique added numbers. Find() takes O(1) time because
-     * we have all two sums in the hash set.
+     * we have all two sums in the hash set. The memory complexity is O(m^2)
      */
     public class TwoSum1 {
-        private Set<Integer> numbers = new LinkedHashSet<>();//use linked hash set reduce time for iteration
-        private Set<Integer> twoSums = new HashSet<>();
+        private final Set<Integer> numbers = new HashSet<>();
+        private final Set<Integer> twoSums = new HashSet<>();
 
         // Add the number to an internal data structure.
         public void add(int number) {

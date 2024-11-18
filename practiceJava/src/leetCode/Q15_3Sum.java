@@ -1,8 +1,6 @@
 package leetCode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by shuaipeng on 11/2/16.
@@ -14,39 +12,89 @@ public class Q15_3Sum {
     }
 
     public List<List<Integer>> threeSum(int[] nums) {
+        if (nums == null || nums.length < 3) {
+            return new ArrayList<>(); // or throw an exception?
+        }
         List<List<Integer>> solutions = new ArrayList<>();
-        if (nums == null || nums.length < 3)
-            return solutions;
-        Arrays.sort(nums);
+        Arrays.sort(nums); // ask can we change the input?
         for (int i = 0; i < nums.length - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1])
-                continue;// skip duplicates e.g. [-2, -2, -2, 0, 2]
-            if (nums[i] > 0)
-                break;
-            int target = -nums[i];
-            int p1 = i + 1;
-            int p2 = nums.length - 1;
-            while (p1 < p2) {
-                int sum = nums[p1] + nums[p2];
-                if (sum == target) {
-                    solutions.add(Arrays.asList(nums[i], nums[p1], nums[p2]));
-                    do {
-                        p1++;// skip duplicates e.g. [-2, 1, 1, 1, 1, 1]
-                    } while (p1 < p2 && nums[p1] == nums[p1 - 1]);// the condition "p1 < p2" maintains loop invariant
-                    do {
-                        p2--;// skip duplicates e.g. [-2, 1, 1, 1, 1, 1]
-                    } while (p1 < p2 && nums[p2] == nums[p2 + 1]);
-                } else if (sum < target) {
-                    do {
-                        p1++;
-                    } while (p1 < p2 && nums[p1] == nums[p1 - 1]);// optional, skip duplicates
-                } else {
-                    do {
-                        p2--;
-                    } while (p1 < p2 && nums[p2] == nums[p2 + 1]);// optional, skip duplicates
+            if (i > 0 && nums[i] == nums[i - 1]) { // we need check duplicate for all of i, j and k.
+                continue;
+            }
+            // reuse the solution for two sum in a sorted array problem
+            // make code more modular
+            twoSumInSortedArray(nums, i + 1, nums.length - 1, -nums[i], solutions);
+        }
+        return solutions;
+    }
+
+    // two pointers technique
+    private void twoSumInSortedArray(int[] nums, int start, int end, int target, List<List<Integer>> solutions) {
+        int j = start;
+        int k = end;
+        while (j < k) {
+            int sum = nums[j] + nums[k];
+            if (sum < target) {
+                j++;
+            } else if (sum > target) {
+                k--;
+            } else {
+                solutions.add(Arrays.asList(-target, nums[j], nums[k]));
+                j++;
+                k--;
+                // j must += 1 first, then skip duplicates by:
+                // while nums[j] is same value as nums[j - 1], keep moving
+                while (j < k && nums[j] == nums[j - 1]) {
+                    j++;
+                }
+                while (j < k && nums[k] == nums[k + 1]) {
+                    k--;
                 }
             }
         }
-        return solutions;
+    }
+
+    private void twoSumInSortedArray_HashSet(int[] nums, int start, int target, List<List<Integer>> solutions) {
+        int index = start;
+        Set<Integer> set = new HashSet<>();
+        while (index < nums.length) {
+            int complement = target - nums[index];
+            if (set.contains(complement)) {
+                solutions.add(Arrays.asList(-target, nums[index], complement));
+                // skipping duplicate is tricky!
+                while (index < nums.length - 1 && nums[index] == nums[index + 1]) { // note the boundary here.
+                    index++;
+                }
+            }
+            set.add(nums[index]);
+            // dedupe in case of target == 6 and nums is [3, 3, 3, 3]
+            index++;
+        }
+    }
+
+    public List<List<Integer>> threeSum2(int[] nums) {
+        if (nums == null || nums.length < 3) {
+            return new ArrayList<>(); // or throw an exception?
+        }
+        // Skipping duplicates is tricky!  It's much easier to just use a set.
+        Set<List<Integer>> solutions = new HashSet<>();
+        Arrays.sort(nums); // ask can we change the input?
+        for (int i = 0; i < nums.length; i++) {
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum < 0) {
+                    j++;
+                } else if (sum > 0) {
+                    k--;
+                } else {
+                    solutions.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j++;
+                    k--;
+                }
+            }
+        }
+        return new ArrayList<>(solutions);
     }
 }
