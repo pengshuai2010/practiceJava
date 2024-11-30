@@ -1,36 +1,13 @@
 package leetCode;
 
-import java.util.*;
-
 /**
  * Created by speng on 11/25/16.
  */
-public class Q215_KthLargestElementInAnArray {
+public class Q215_KthLargestElementInAnArray_QuickSort {
     public static void main(String[] args) {
-        Q215_KthLargestElementInAnArray solution = new Q215_KthLargestElementInAnArray();
+        Q215_KthLargestElementInAnArray_QuickSort solution = new Q215_KthLargestElementInAnArray_QuickSort();
         System.out.println(solution.findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
         System.out.println(solution.findKthLargest(new int[]{1, 5, 1, 1, 6, 4}, 2));
-    }
-
-    /**
-     * use max heap. Initially building the heap take O(n) time, then taking out k largest elements takes O(k*log(n)) time.
-     */
-    public int findKthLargest1(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || k < 1)
-            throw new RuntimeException("invalid input");
-        List<Integer> list = new ArrayList<>();
-        for (int num : nums)
-            list.add(num);
-        Queue<Integer> heap = new PriorityQueue<>(list.size(), new Comparator<Integer>() {
-            public int compare(Integer a, Integer b) {
-                return b - a;
-            }
-        });
-        heap.addAll(list);
-        for (int i = 1; i < k; i++) {
-            heap.poll();
-        }
-        return heap.poll();
     }
 
     private static int partition(int[] nums, int start, int end) {

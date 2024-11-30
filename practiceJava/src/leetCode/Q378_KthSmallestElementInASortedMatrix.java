@@ -15,43 +15,54 @@ public class Q378_KthSmallestElementInASortedMatrix {
             System.out.println(new Q378_KthSmallestElementInASortedMatrix().kthSmallest(matrix, i));
     }
 
-    /**
-     * use the idea of N-way merge of sorted lists
-     */
-    public int kthSmallest(int[][] matrix, int k) {
-        if (matrix == null || matrix.length == 0 ||
-                matrix[0] == null || matrix[0].length == 0) {
-            // handle invalid input
-        }
-        // assuming k starts from 1
-        // need to clarify if k starts from 1 in an interview
-        int numRows = matrix.length;
-        int numCols = matrix[0].length;// assuming matrix is rectangle
-        PriorityQueue<Tuple> minHeap = new PriorityQueue<>();
-        for (int i = 0; i < numRows && i < k; i++)
-            minHeap.offer(new Tuple(i, 0, matrix[i][0]));
-        for (int i = 0; i < k - 1; i++) {
-            Tuple tuple = minHeap.poll();
-            if (tuple.col < numCols - 1)
-                minHeap.offer(new Tuple(tuple.row, tuple.col + 1, matrix[tuple.row][tuple.col + 1]));
-        }
-        return minHeap.poll().val;
+    private static final int[][] DIRECTIONS = new int[][]{{0, 1}, {1, 0}};
+
+    // optimization: Suppose k is less than numRows or numCols, there is no need to search for beyond that
+    private static boolean inBoundary(int row, int col, int numRows, int numCols, int k) {
+        // the direction only goes right or down, so we don't need to check for ">= 0"
+        return row < numRows && row < k && col < numCols && col < k;
     }
 
-    private class Tuple implements Comparable {
+    // BFS with PriorityQueue
+    public int kthSmallest(int[][] matrix, int k) {
+        // clarify if k and matrix will be valid
+        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
+            throw new IllegalArgumentException("invalid matrix");
+        }
+        int numRows = matrix.length;
+        int numCols = matrix[0].length;
+        if (k < 0 || k > numRows * numCols) {
+            throw new IllegalArgumentException("invalid k value");
+        }
+        PriorityQueue<Location> minHeap = new PriorityQueue<>((Location a, Location b) -> a.value - b.value);
+        boolean[][] visited = new boolean[numRows][numCols];
+        minHeap.add(new Location(0, 0, matrix[0][0]));
+        visited[0][0] = true;
+        int count = 0;
+        while (count < k - 1) {
+            Location location = minHeap.remove();
+            count++;
+            for (int[] direction : DIRECTIONS) {
+                int row = location.row + direction[0];
+                int col = location.col + direction[1];
+                if (inBoundary(row, col, numRows, numCols, k) && !visited[row][col]) {
+                    minHeap.add(new Location(row, col, matrix[row][col]));
+                    visited[row][col] = true;
+                }
+            }
+        }
+        return minHeap.remove().value;
+    }
+
+    private static class Location {
         int row;
         int col;
-        int val;
+        int value;
 
-        Tuple(int row, int col, int val) {
+        Location(int row, int col, int value) {
             this.row = row;
             this.col = col;
-            this.val = val;
-        }
-
-        @Override
-        public int compareTo(Object o) {
-            return val - ((Tuple) o).val;
+            this.value = value;
         }
     }
 }

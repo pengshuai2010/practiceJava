@@ -1,6 +1,6 @@
 package leetCode;
 
-public class Q912_SortAnArray {
+public class Q912_SortAnArray_QuickSort {
     public int[] sortArray(int[] nums) {
         quickSort(nums, 0, nums.length - 1);
         return nums;
