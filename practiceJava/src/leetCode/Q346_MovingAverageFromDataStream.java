@@ -7,8 +7,8 @@ import java.util.Queue;
  * Created by speng on 12/11/16.
  */
 public class Q346_MovingAverageFromDataStream {
-    private int size;
-    private Queue<Integer> queue;
+    private final int size;
+    private final Queue<Integer> queue;
     private double sum;//prevent overflow! consider the case when all inputs are Integer.MAX_VALUE
 
     /**
@@ -22,9 +22,9 @@ public class Q346_MovingAverageFromDataStream {
 
     public double next(int val) {
         if (queue.size() >= size) {
-            sum -= queue.poll();
+            sum -= queue.remove();
         }
-        queue.offer(val);
+        queue.add(val);
         sum += val;
         return sum / queue.size();
     }

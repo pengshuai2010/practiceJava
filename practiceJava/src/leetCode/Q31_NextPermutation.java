@@ -4,31 +4,43 @@ package leetCode;
  * Created by shuaipeng on 11/10/16.
  */
 public class Q31_NextPermutation {
+    private static void reverse(int[] nums, int start, int end) {
+        int i = start;
+        int j = end;
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+
     /**
      * a good explanation https://leetcode.com/articles/next-permutation/
      */
     public void nextPermutation(int[] nums) {
-        if (nums == null || nums.length < 2)
+        // will nums be null or empty?
+        if (nums.length <= 1) {
             return;
-        int i;
-        for (i = nums.length - 1; i > 0; i--)
-            if (nums[i - 1] < nums[i])
-                break;
-        if (i > 0) {
-            int j;//starting from last element, find a nums[j] that nums[j] > nums[i - 1]
-            for (j = nums.length - 1; j > i; j--)
-                if (nums[j] > nums[i - 1])
-                    break;
-            swap(nums, i - 1, j);
         }
-        // element starting from nums[i] are in descending order
-        for (int m = i, n = nums.length - 1; m < n; m++, n--)
-            swap(nums, m, n);
-    }
-
-    private void swap(int[] a, int i, int j) {
-        int tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
+        // start from the end, find the start of a descending sequence
+        int p = nums.length - 1;
+        while (p - 1 >= 0 && nums[p - 1] >= nums[p]) {
+            p--;
+        }
+        if (p > 0) {
+            // start from the end, find the first number that is greater than nums[p - 1]
+            int q = nums.length - 1;
+            while (nums[q] <= nums[p - 1]) {
+                q--;
+            }
+            swap(nums, p - 1, q);
+        }
+        reverse(nums, p, nums.length - 1); // numbers from index p to nums.length is in descending order, so need to reverse
     }
 }
