@@ -9,6 +9,11 @@ public class Q987_VerticalOrderTraversalOfABinaryTree {
     private int minCol;
     private int maxCol;
 
+    // Compare with Q314. Binary Tree Vertical Order Traversal https://leetcode.com/problems/binary-tree-vertical-order-traversal/
+    // Q314 requires that when two nodes are at the row and col, they are sorted by the horizontal order, which can
+    // be achieved by simply traversing the left branch before the right branch.
+    // This problem requires that two nodes at the row and col be sorted by their value, this mean we need to we have to
+    // actually sort the nodes at the same (row, col) location.
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
@@ -24,6 +29,8 @@ public class Q987_VerticalOrderTraversalOfABinaryTree {
         return result;
     }
 
+    // Alternatively, we can use BFS to traverse the tree. We will need an Item class that has row, col and TreeNode
+    // fields.
     private void inorder(TreeNode root, int row, int col, Map<Integer, Map<Integer, List<Integer>>> map) {
         if (root == null) {
             return;
