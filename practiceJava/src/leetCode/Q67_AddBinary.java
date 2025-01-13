@@ -6,33 +6,21 @@ package leetCode;
 public class Q67_AddBinary {
     //questions to ask: are the strings guranteed to be not null/empty?
     // how long would the strings be? e.g. guranteed to be within the range in int/long, or unbounded?
+    // leading zeros?
     public String addBinary(String a, String b) {
-        if (a == null || a.length() == 0) {
-            if (b == null || b.length() == 0) {
-                return "0";
-            } else {
-                return b;
-            }
-        } else if (b == null || b.length() == 0) {
-            return a;
-        }
-        StringBuilder sb = new StringBuilder();
         int carry = 0;
-        for (int i = a.length() - 1, j = b.length() - 1; i >= 0 || j >= 0; i--, j--) {
-            int sum = carry;
-            if (i >= 0) {
-                sum += a.charAt(i) - '0';
-            }
-            if (j >= 0) {
-                sum += b.charAt(j) - '0';
-            }
+        StringBuilder sb = new StringBuilder();
+        for (int p1 = a.length() - 1, p2 = b.length() - 1; p1 >= 0 || p2 >= 0; p1--, p2--) {
+            int binary1 = p1 >= 0 && a.charAt(p1) == '1' ? 1 : 0;
+            int binary2 = p2 >= 0 && b.charAt(p2) == '1' ? 1 : 0;
+            int sum = binary1 + binary2 + carry;
             carry = sum / 2;
-            sum %= 2;
-            sb.append((char) (sum + '0'));
+            int remainder = sum % 2;
+            sb.append(remainder);
         }
         if (carry > 0) {
-            sb.append((char) (carry + '0'));
+            sb.append('1');
         }
-        return sb.reverse().toString();
+        return  sb.reverse().toString();
     }
 }

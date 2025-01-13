@@ -4,6 +4,16 @@ package leetCode;
  * Created by speng on 11/26/16.
  */
 public class Q121_BestTimeToBuyAndSellStock {
+    public int maxProfit2(int[] prices) {
+        int max = Integer.MIN_VALUE;
+        int maxProfit = 0;
+        for (int i = prices.length - 1; i >= 0; i--) {
+            max = Math.max(max, prices[i]);
+            maxProfit = Math.max(maxProfit, max - prices[i]);
+        }
+        return maxProfit;
+    }
+
     public int maxProfit1(int[] prices) {
         if (prices == null || prices.length == 0) {
             return 0;
