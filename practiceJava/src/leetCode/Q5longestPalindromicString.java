@@ -12,34 +12,40 @@ public class Q5longestPalindromicString {
         System.out.println(new Q5longestPalindromicString().longestPalindrome("zxabax"));
     }
 
+    private int start;
+    private int end;
+    private int maxLength;
+
     public String longestPalindrome(String s) {
-        if (s == null || s.length() == 0)
-            return "";
-        int max = 0;
-        int start = 0;
-        // this algorithm is simple and intuitive. At each element, it tries to extend to a palindrome evenly and oddly,
-        // and record the longest.
-        // Another solution is dynamic programming.
+        // will s be empty? null?
+        this.start = 0;
+        this.end = -1;
+        this.maxLength = 0;
         for (int i = 0; i < s.length(); i++) {
-            int oddLength = extend(s, i, i);
-            int evenLength = extend(s, i, i + 1);
-            if (oddLength > evenLength && oddLength > max) {
-                max = oddLength;
-                start = i - oddLength / 2;
-            } else if (evenLength > oddLength && evenLength > max) {
-                max = evenLength;
-                start = i - evenLength / 2 + 1;
-            }
+            expand(i, i, s);
+            // at the end (i + 1) is s.length() but it's OK because there is an inBoundary check in expand method
+            expand(i, i + 1, s);
         }
-        return s.substring(start, start + max);
+        if (this.maxLength == 0) {
+            return "";
+        }
+        return s.substring(start, end + 1);
     }
 
-    private int extend(String s, int i, int j) {
-        if (s == null || i > j)
-            return 0;
-        for (; i >= 0 && j < s.length(); i--, j++)
-            if (s.charAt(i) != s.charAt(j))
-                break;
-        return j - i + 1 - 2;
+    private void expand(int left, int right, String s) {
+        while (inBoundary(left, right, s.length()) && s.charAt(left) == s.charAt(right)) {
+            int length = right - left + 1;
+            if (length > this.maxLength) {
+                this.start = left;
+                this.end = right;
+                this.maxLength = length;
+            }
+            left--;
+            right++;
+        }
+    }
+
+    private boolean inBoundary(int j, int k, int length) {
+        return j >= 0 && k < length;
     }
 }
