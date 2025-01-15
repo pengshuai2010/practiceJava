@@ -15,3 +15,8 @@ public class Q1047_RemoveAllAdjacentDuplicatesInString {
         return sb.toString();
     }
 }
+// for each char
+//     if stack is empty or stack top != ch
+//         push
+//     else
+//         stack pop
